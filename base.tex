@@ -1,0 +1,372 @@
+\usepackage{etex}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Use Moloch theme (evolution of Metropolis)
+\usetheme[numbering=fraction,progressbar=frametitle,block=transparent,titleformat=smallcaps]{moloch}
+\useoutertheme{moloch}
+\useinnertheme{moloch}
+\usefonttheme{moloch}
+\usecolortheme{moloch}
+
+% Set theme colors
+\usepackage[x11names]{xcolor} % See https://latex-tutorial.com/color-latex/ for all loaded colors
+
+\definecolor{venis-darker-blue}{RGB}{2,48,89} % Darker blue extracted with color.adobe.com
+\definecolor{venis-lighter-blue}{RGB}{2,72,115} % Lighter blue extracted with color.adobe.com
+\definecolor{venis-faithful-blue}{RGB}{0,60,105} % Faithful blue hue extracted from Venis logo
+\definecolor{venis-darker-yellow}{RGB}{242,135,5} % Darker yellow hue extracted with color.adobe.com
+\definecolor{venis-faithful-yellow}{RGB}{255,161,0} % Faithful yellow hue extracted from Venis logo
+\definecolor{monokai-bg}{RGB}{34,35,28} % Faithful Monokai theme for minted package (background)
+\definecolor{solarized-light-bg}{RGB}{251,242,200} % Faithful Solarized theme for minted package (background)
+\definecolor{vscode-dark-bg}{RGB}{100,100,100} % Dark grey for background (picked from VSCode bg theme)
+
+\setbeamercolor{normal text}{fg=venis-darker-blue}
+\setbeamercolor{alerted text}{fg=venis-darker-yellow}
+\setbeamercolor{example text}{fg=venis-faithful-blue}
+\setbeamercolor{progress bar}{fg=venis-faithful-yellow}
+\setbeamercolor{progress bar in head/foot}{fg=venis-faithful-yellow}
+\setbeamercolor{progress bar in section page}{fg=venis-faithful-yellow}
+\setbeamercolor{title separator}{fg=venis-darker-yellow}
+\setbeamercolor{block title}{bg=venis-lighter-blue,fg=white}
+\setbeamercolor{block body}{bg=solarized-light-bg,fg=normal text.fg}
+
+
+% No navigation symbols on slides
+\setbeamertemplate{navigation symbols}{}
+% Set the footer
+\setbeamertemplate{frame footer}{\alert{\faicon{users}} Simone Scannapieco \qquad\qquad\qquad\qquad\qquad\qquad \alert{\faicon{book}} Spring AI - Corso avanzato \qquad\qquad\qquad\qquad\qquad\qquad \alert{\faicon{institution}} Venis S.p.A, Venezia, IT}
+% Set general frame configuration
+\setbeamertemplate{page number in head/foot}[appendixframenumber]
+\setbeamertemplate{section in toc}[sections numbered]
+% Set block configuration
+\setbeamertemplate{blocks}[rounded][shadow=true]
+% Set special block for code
+\newenvironment<>{codeblock}[1]{%
+  \setbeamercolor{block body}{bg=vscode-dark-bg}%
+  \begin{block}{#1}}{\end{block}}
+
+\usepackage[cache=false]{minted}
+\usemintedstyle[shell-session]{monokai}
+\setminted[shell-session]{
+	escapeinside=\@\~\$,
+	bgcolor=vscode-dark-bg,
+	bgcolorpadding=0.5em,
+	autogobble,
+	fontfamily=tt,
+	fontsize=\scriptsize,
+	stripall,
+	stripnl
+}
+
+% Set bibliography properties
+\setbeamerfont{bibliography item}{size=\scriptsize}
+\setbeamerfont{bibliography entry author}{size=\scriptsize}
+\setbeamerfont{bibliography entry title}{size=\scriptsize}
+\setbeamerfont{bibliography entry location}{size=\scriptsize}
+\setbeamerfont{bibliography entry note}{size=\scriptsize}
+
+\setbeamerfont{block body}{size=\scriptsize}
+
+% Set the color of enumerate labels as the same color of alerted foreground for the current theme
+%\setbeamercolor{section number projected}{bg=alerted text.fg}
+
+% Add logo on frame title
+\addtobeamertemplate{frametitle}{}{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[anchor=north east,xshift=-5pt,yshift=-7pt] at (current page.north east) 		{\includesvg[height=15pt,keepaspectratio]{dgroove-white.svg}\hspace*{5pt}\includegraphics[height=15pt,keepaspectratio]{venis-logo-round.png}};
+	\end{tikzpicture}
+  	\ifx\insertframesubtitle\@empty\else%
+  		\usebeamerfont{framesubtitle}%
+  		\usebeamercolor[fg]{framesubtitle}%
+  		\insertframesubtitle%
+  	\fi%
+}
+
+\usepackage[sfdefault]{roboto}
+
+\usepackage{appendixnumberbeamer}
+
+\usepackage{latexsym}
+\usepackage{amssymb,amsfonts}
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{pifont}
+\usepackage{mathtools}
+
+\usepackage{fontspec}
+\usepackage{fontawesome}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+
+\newcommand{\set}[2][\relax]{%
+    \ifthenelse{\equal{#1}{auto}}{\left\{#2\right\}}{#1\{#2#1\}}%
+}
+
+\usepackage{xspace}
+\usepackage[caption=true,font=scriptsize]{subfig}
+
+\usepackage[algo2e,lined,linesnumbered,titlenumbered,longend,italiano]{algorithm2e}
+
+\usepackage{tabularx,multirow}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{epigraph}
+
+% Multimedia configuration
+\usepackage{graphicx}
+\graphicspath{{./img/}{../../img/base/}}
+% Load the adjustbox package with the export option to make functions available to the \includegraphics command 
+\usepackage[export]{adjustbox}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.png,.eps}
+\usepackage{svg}
+\setsvg{inkscapeexe=inkscape, inkscapeopt=-z -D}
+
+% To use fontawesome icons as item label in itemize environments
+\usepackage{enumitem}
+\usepackage{setspace}
+\SetLabelAlign{center}{\strut\smash{\parbox[t]\labelwidth{\centering#1}}}
+\setenumerate[1]{%
+  label=\protect\usebeamerfont{enumerate item}%
+        \protect\usebeamercolor[fg]{enumerate item}%
+        \insertenumlabel.
+}
+\setitemize{label=\usebeamerfont*{itemize item}%
+  \usebeamercolor[fg]{itemize item}
+  \usebeamertemplate{itemize item}
+}
+
+\newcommand*\circled[3]{\tikz[baseline=(char.base)]{						   
+            \node[shape=circle,fill=#1,inner sep=1pt] (char)				   
+{\color{#2}{\textbf{#3}}};}}
+
+\newcommand*\normalcircled[1]{\circled{venis-darker-blue}{white}{#1}}
+\newcommand*\alertedcircled[1]{\circled{venis-darker-yellow}{white}{#1}}
+
+% --------------------------------------------------------------------------------------------------------------------------
+% To import media (video and audio):
+% (1) STRATEGY 1:
+% From: https://tex.stackexchange.com/questions/516029/media9-is-becoming-obsolete-dec-2020-any-alternatives-for-embedding-video-audio/516102#516102
+
+\usepackage{xkeyval}
+\usepackage{media9}
+\usepackage{zref-abspage}
+
+\makeatletter
+\define@boolkey{simplemedia}{autoplay}{\def\simplemediaautoplay{#1}}
+\define@boolkey{simplemedia}{showGUI}{\def\simplemediashowGUI{#1}}
+\presetkeys{simplemedia}{autoplay=true,showGUI=true}{}
+
+% all page-references relate to: Adobe PDF Reference, sixth edition, November 2006, can be found e.g.:
+%https://ghostscript.com/~robin/pdf_reference17.pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \simplemedia[<options>]{<poster or text>}{<media file>}{MIME type}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ExplSyntaxOn
+%\cs_new:Npn\simplemedia[3][]{
+\newcommand\simplemedia[4][]{%
+  \setkeys{simplemedia}{#1}%
+  \leavevmode
+  \pbs_pdfobj:nnn{}{fstream}{{}{#3}}
+  \pbs_pdfobj:nnn{}{dict}{
+    /Type/Filespec/F~(#3)/UF~(#3)
+    /EF~<</F~\pbs_pdflastobj:>>
+  }
+  %
+  \pbs_pdfobj:nnn{}{dict}{
+      /CT~(#4)% content type, page 764, table 9.9
+      /D~\pbs_pdflastobj:% full file spcification, page 764, table 9.9
+      /N~(Media~clip~from~#3)% name of media clip, page 764, table 9.8
+      /P~<</TF (TEMPACCESS)>>% media permissions, page 764, table 9.9
+      /S~/MCD% subtype media-clip-data, page 764, table 9.8
+  }
+  %
+  \pbs_pdfobj:nnn{}{dict}{
+      /C~\pbs_pdflastobj:% media clip dictionary, page 762, table 9.6
+      /N~(RenditionFrom#3)% name of rendition, page 759, table 9.1
+      /P~<<% media play parameters dictionary, page 762, table 9.6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Here's the point to switch on/off player GUI
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        /BE~<</C~\simplemediashowGUI~%C: display a player-specific controller user interface, page 769, table 9.15
+        /A~true>>~%A: automatically play when activated, page 770, table 9.15
+        % select player (not used here)
+%        /PL~<</A~[% arrray of media player info objects page 777
+%%        <</PID~<</U~(vnd.adobe.swname:ADBE_MCI)~>>~>>~% PID: software identifier object, page 779
+%        <</PID~<</U~(vnd.adobe.swname:MSFT_WindowsMediaPlayer)~/OS[(win16)~(win32)~(win9x)~(winnt)~(wince)]>>~>>~%/OS operating system, page 780
+%        ]~>>
+      ~>>
+      /S~/MR% subtype of rendition, page 759, table 9.1
+  }
+  %
+  \tl_set:Nx\mediarendition{\pbs_pdflastobj:}
+  %  
+  \pbs_pdfobj:nnn{}{dict}{}% obj-number created for later use
+  \tl_set:Nx\renditionactionplay{\pbs_pdflastobj:}%
+  %
+  \pbs_pdfobj:nnn{}{dict}{}% obj-number created for later use
+  \tl_set:Nx\renditionactionstop{\pbs_pdflastobj:}%
+  %
+  \hbox_set:Nn\l_tmpa_box{#2}% size of annotation
+  \tl_set:Nx\l_box_wd_tl{\dim_use:N\box_wd:N\l_tmpa_box}
+  \tl_set:Nx\l_box_ht_tl{\dim_use:N\box_ht:N\l_tmpa_box}
+  \tl_set:Nx\l_box_dp_tl{\dim_use:N\box_dp:N\l_tmpa_box}
+  \pbs_pdfxform:nnnnn{1}{1}{}{}{\l_tmpa_box}
+  %
+  \tl_set:Nx\l_simplem_current_page_tl{\zref@extract{simplem@\int_use:N\g_simplem_id_int}{abspage}}
+  \pbs_pdfannot:nnnn{\l_box_wd_tl}{\l_box_ht_tl}{\l_box_dp_tl}{
+      /T~(AnnotationFrom#3)~% title of screen annotation, page 640, table 8.38 
+      /Subtype~/Screen~% Subtype Sreen, page 616, table 8.20 and page 640, table 8.38
+      /BS~<</W~1/S/S>>% Borderstyle
+      /C~[0.039216~0.039216~0.039216]% color used background, title bar, border, page 607, table 8.15
+      /Contents~(EmbeddedAudiofile#3)% Text to be displayed, page 606, table 8.15
+      /NM~(audioscreenannot:#3)% annotation name, page 606, table 8.15
+      /AP~<</N~\pbs_pdflastxform:>>% appearance dictionary, page 606, table 8.15
+      /F~4~%Annotation flag, page 606, table 8.15 and page 608, table 8.16
+      /A~\renditionactionplay~% Action to be performed, page 640 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Here's the point to switch on/off autoplay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      % autoplay is realised by "additional action" (page 640), 
+      % PageOpen (PO) -> play "Play Rendition"
+      % PageClose (PC) -> play "Stop Rendition" (see page 650)
+      /AA~<<\ifKV@simplemedia@autoplay~/PO~\renditionactionplay~\fi~/PC~\renditionactionstop~>>~%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       see Adobe pdfmark-reference, I THINK, THIS WORKS ONLY WITH tex->dvips->ps2pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \int_compare:nT{\l_simplem_current_page_tl>0}{
+        /P~\exp_args:Ne\pdf_pageobject_ref:n{\l_simplem_current_page_tl}
+      }
+      /CA~1%constant opacity value, page 618
+  }
+  % Rendition Action: "Play Rendition"
+  \pbs_pdfobj:nnn{\renditionactionplay}{dict}{%
+      /R~\mediarendition%
+      /S~/Rendition
+      /OP~4%operation to perform (page 669): 4 = play rendition specified by R
+      /AN~\pbs_pdflastann:%
+  }
+  % Rendition Action: "Stop Rendition"
+  \pbs_pdfobj:nnn{\renditionactionstop}{dict}{%
+      /R~\mediarendition%
+      /S~/Rendition
+      /OP~1%operation to perform (page 669): 1 = stop rendition specified by R
+      /AN~\pbs_pdflastann:%
+  }
+  %
+  \phantom{#2}
+  \zref@labelbyprops{simplem@\int_use:N\g_simplem_id_int}{abspage}
+  \int_gincr:N\g_simplem_id_int
+}%
+\int_new:N\g_simplem_id_int
+\ExplSyntaxOff
+\makeatother
+
+% (2) STRATEGY 2:
+% From https://www.youtube.com/watch?v=BspamyoyjUk and https://gist.github.com/FedericoTartarini/7af4eb6fc13b1cb9cc68b7e8ea823d50
+% This code was copied from https://tex.stackexchange.com/a/516102
+
+\usepackage[bigfiles]{pdfbase}
+\ExplSyntaxOn
+\NewDocumentCommand\embedvideo{smm}{
+  \group_begin:
+  \leavevmode
+  \tl_if_exist:cTF{file_\file_mdfive_hash:n{#3}}{
+    \tl_set_eq:Nc\video{file_\file_mdfive_hash:n{#3}}
+  }{
+    \IfFileExists{#3}{}{\GenericError{}{File~`#3'~not~found}{}{}}
+    \pbs_pdfobj:nnn{}{fstream}{{}{#3}}
+    \pbs_pdfobj:nnn{}{dict}{
+      /Type/Filespec/F~(#3)/UF~(#3)
+      /EF~<</F~\pbs_pdflastobj:>>
+    }
+    \tl_set:Nx\video{\pbs_pdflastobj:}
+    \tl_gset_eq:cN{file_\file_mdfive_hash:n{#3}}\video
+  }
+  %
+  \pbs_pdfobj:nnn{}{dict}{
+    /Type/RichMediaInstance/Subtype/Video
+    /Asset~\video
+    /Params~<</FlashVars (
+      source=#3&
+      skin=SkinOverAllNoFullNoCaption.swf&
+      skinAutoHide=true&
+      skinBackgroundColor=0x5F5F5F&
+      skinBackgroundAlpha=0
+    )>>
+  }
+  %
+  \pbs_pdfobj:nnn{}{dict}{
+    /Type/RichMediaConfiguration/Subtype/Video
+    /Instances~[\pbs_pdflastobj:]
+  }
+  %
+  \pbs_pdfobj:nnn{}{dict}{
+    /Type/RichMediaContent
+    /Assets~<<
+      /Names~[(#3)~\video]
+    >>
+    /Configurations~[\pbs_pdflastobj:]
+  }
+  \tl_set:Nx\rmcontent{\pbs_pdflastobj:}
+  %
+  \pbs_pdfobj:nnn{}{dict}{
+    /Activation~<<
+      /Condition/\IfBooleanTF{#1}{PV}{XA}
+      /Presentation~<</Style/Embedded>>
+    >>
+    /Deactivation~<</Condition/PI>>
+  }
+  %
+  \hbox_set:Nn\l_tmpa_box{#2}
+  \tl_set:Nx\l_box_wd_tl{\dim_use:N\box_wd:N\l_tmpa_box}
+  \tl_set:Nx\l_box_ht_tl{\dim_use:N\box_ht:N\l_tmpa_box}
+  \tl_set:Nx\l_box_dp_tl{\dim_use:N\box_dp:N\l_tmpa_box}
+  \pbs_pdfxform:nnnnn{1}{1}{}{}{\l_tmpa_box}
+  %
+  \pbs_pdfannot:nnnn{\l_box_wd_tl}{\l_box_ht_tl}{\l_box_dp_tl}{
+    /Subtype/RichMedia
+    /BS~<</W~0/S/S>>
+    /Contents~(embedded~video~file:#3)
+    /NM~(rma:#3)
+    /AP~<</N~\pbs_pdflastxform:>>
+    /RichMediaSettings~\pbs_pdflastobj:
+    /RichMediaContent~\rmcontent
+  }
+  \phantom{#2}
+  \group_end:
+}
+\ExplSyntaxOff
+% --------------------------------------------------------------------------------------------------------------------------
+
+\mode<beamer|second|trans|article>{
+  \newcommand\presentvideo[2]{\embedvideo{\includegraphics[width=\textwidth]{#1}}{#2}}
+}
+
+\mode<handout>{
+  \newcommand\presentvideo[2]{\includegraphics[width=\textwidth]{#1}}
+}
+
+\makeatletter
+\def\beamer@framenotesbegin{% at beginning of slide
+\usebeamercolor[fg]{normal text}
+\gdef\beamer@noteitems{}%
+\gdef\beamer@notes{}%
+}
+\makeatother
+
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=venis-faithful-blue,
+    filecolor=venis-faithful-yellow,      
+    urlcolor=venis-faithful-yellow,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
