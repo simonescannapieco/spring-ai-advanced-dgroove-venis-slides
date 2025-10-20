@@ -12,120 +12,100 @@
             \item[\alert{\faArrowCircleRight}] Docker mette a disposizione una serie di modelli \textit{open source} scaricabili tramite Engine o Desktop
         \end{itemize}
 
-    \onslide<3->\item[\alert{\faExternalLink}] \url{https://www.docker.com/blog/run-llms-locally/}
-    \item[\alert{\faExternalLink}] \url{https://www.docker.com/blog/introducing-docker-model-runner/}
+        \onslide<3->\item[\alert{\faArrowCircleRight}] Requisiti: {\footnotesize \url{https://www.ajeetraina.com/docker-model-runner-tutorial-and-cheatsheet-mac-windows-and-linux-support/}}
+
+    \onslide<4->\item[\alert{\faExternalLink}] {\footnotesize \url{https://docs.docker.com/ai/model-runner/}}
+    \item[\alert{\faExternalLink}] {\footnotesize \url{https://www.docker.com/blog/run-llms-locally/}}
+    \item[\alert{\faExternalLink}] {\footnotesize \url{https://www.docker.com/blog/introducing-docker-model-runner/}}
     \end{itemize}
 \end{frame}
 %
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Applicazione e passaggi}
-    {\small
+\begin{frame}[t,fragile] \frametitle{Docker Model Runner}
+    \framesubtitle{Come si usa?}
     \begin{itemize}[leftmargin=10pt,align=right]
-        \item[\alert{\faArrowCircleRight}] Stub di progetto Spring AI multi-configurazione (Gemini + Ollama)
-        \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<2->\item[\alertedcircled{1}] Creazione \texttt{docker-compose.yml} per servizio Docker Ollama
-            \onslide<3->\item[\alertedcircled{2}] Creazione \textit{file} variabili di ambiente per servizio Ollama
-            \onslide<4->\item[\alertedcircled{3}] Creazione \textit{script} per \textit{start}, \textit{stop} ed eliminazione servizi Docker 
-            \onslide<5->\item[\alertedcircled{4}] Creazione configurazione multi-LLM
-            \onslide<6->\item[\alertedcircled{5}] Creazione modelli per domanda e risposta
-            \onslide<7->\item[\alertedcircled{6}] Creazione interfaccia ed implementazione del servizio di richiesta
-            \onslide<8->\item[\alertedcircled{7}] Creazione del controllore MVC
-            \onslide<9->\item[\alertedcircled{8}] \textit{Test} delle funzionalità con Postman/Insomnia 
-        \end{itemize}
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Tramite Docker Engine
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Tramite Docker Desktop
+    \end{itemize}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Docker Model Runner}
+    \framesubtitle{Utilizzo di base - Docker Engine}
+        \begin{codeblock}{Caricamento LLM in locale}
+            \begin{minted}{shell-session}
+            docker model pull ai/gemma3
+            \end{minted}
+        \end{codeblock}
+        \begin{codeblock}{Esecuzione LLM in locale}
+            \begin{minted}{shell-session}
+            docker model run ai/gemma3
+            \end{minted}
+        \end{codeblock}
+        \begin{codeblock}{Elenco LLM in locale}
+            \begin{minted}{shell-session}
+            docker model list
+            \end{minted}
+        \end{codeblock}
+        \begin{codeblock}{Eliminazione LLM in locale}
+            \begin{minted}{shell-session}
+            docker model rm ai/gemma3
+            \end{minted}
+        \end{codeblock}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Docker Model Runner}
+\framesubtitle{Utilizzo di base - Docker Desktop}
+	\vspace*{-.5cm}
+    {\footnotesize
+    \begin{itemize}
+        \only<1|handout:1>{\item[\alertedcircled{1}] Verificare le impostazioni relative ad \texttt{AI}}
+        \only<2|handout:2>{\item[\alertedcircled{2}] Verificare le impostazioni relative alle \texttt{Beta features}}
+        \only<3|handout:3>{\item[\alertedcircled{3}] Accedere al pannello \texttt{Docker Hub} della sezione \texttt{Models}}
+        \only<4|handout:4>{\item[\alertedcircled{4}] Selezionare il modello ed eventuale versionamento quantizzato}
+        \only<5|handout:5>{\item[\alertedcircled{5}] Utilizzare il modello da linea di comando integrata}
     \end{itemize}
     }
+    \vfill
+    \begin{minipage}[b]{\textwidth}
+		\centering
+        \only<1|handout:1>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/docker-desktop-model-runner-ai.png}
+		    \end{figure}
+        }
+         \only<2|handout:2>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/docker-desktop-model-runner-beta-features.png}
+		    \end{figure}
+        }
+        \only<3|handout:3>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/docker-desktop-model-runner-hub.png}
+		    \end{figure}
+        }
+        \only<4|handout:4>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/docker-desktop-model-runner-download.png}
+		    \end{figure}
+        }
+        \only<5|handout:5>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/docker-desktop-model-runner-model-inference.png}
+		    \end{figure}
+        }
+	\end{minipage}
 \end{frame}
 %
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Servizio Docker Ollama - I}
-        \begin{block}{\textit{File} \texttt{docker-compose.yml}}
-			{\tiny\inputminted{yaml}{code/docker-compose.yml}}
+\begin{frame}[t,fragile] \frametitle{Docker Model Runner}
+    \framesubtitle{Integrazione in Spring AI}
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Come fosse un servizio \alert{OpenAI}!
+    \end{itemize}
+        \onslide<2->
+        \begin{block}{\textit{File} \texttt{pom.xml}}
+			{\tiny\inputminted{xml}{code/pom.xml}}
     	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Servizio Docker Ollama - II}
-        \begin{block}{\textit{File} \texttt{docker-compose.yml}}
-			{\tiny\inputminted{yaml}{code/docker-compose-2.yml}}
+        \onslide<3->
+        \begin{block}{\textit{File} \texttt{application.yml}}
+			{\tiny\inputminted{yaml}{code/application.yml}}
     	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Variabili di ambiente servizio Docker Ollama}
-        \begin{block}{\textit{File} \texttt{spring-ai.env}}
-			{\tiny\inputminted{text}{code/spring-ai.env}}
-    	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Script servizi Docker}
-        \begin{block}{\textit{File} \texttt{start\_spring\_ai\_services.sh}}
-			{\tiny\inputminted{bash}{code/start_spring_ai_services.sh}}
-    	\end{block}
-
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Script servizi Docker}
-        \begin{block}{\textit{File} \texttt{stop\_spring\_ai\_services.sh}}
-			{\tiny\inputminted{bash}{code/stop_spring_ai_services.sh}}
-    	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Script servizi Docker}
-        \begin{block}{\textit{File} \texttt{erase\_spring\_ai\_services.sh}}
-			{\tiny\inputminted{bash}{code/erase_spring_ai_services.sh}}
-    	\end{block}
-
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Configurazione multi LLM}
-        \vspace*{-.7cm}
-        \begin{block}{Configurazione Gemini + Ollama}
-			{\tiny\inputminted{java}{code/ChatClientConfig.java}}
-    	\end{block}
-
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Modelli per domande e risposte}
-        \begin{block}{Modello per domanda}
-			{\tiny\inputminted{java}{code/Question.java}}
-    	\end{block}
-        \begin{block}{Modello per risposta}
-			{\tiny\inputminted{java}{code/Answer.java}}
-    	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Servizio multi LLM}
-        \begin{block}{Interfaccia servizio}
-			{\tiny\inputminted{java}{code/QuestionService.java}}
-    	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Servizio multi LLM}
-        \vspace*{-.7cm}
-        \begin{block}{Implementazione servizio}
-			{\tiny\inputminted{java}{code/QuestionServiceImpl.java}}
-    	\end{block}
-\end{frame}
-%
-\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{MVC del servizio multi LLM}
-    	\vspace*{-.7cm}
-        \begin{block}{Implementazione controllore REST}
-			{\tiny\inputminted{java}{code/QuestionController.java}}
-    	\end{block}
-\end{frame}
-%
-\begin{frame}[fragile] \frametitle{Codice}
-    \framesubtitle{Branch di riferimento}
-	\begin{center}
-		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-base-dgroove-venis-code.git}}}\\
-		\textit{Branch:} \alert{\texttt{1-spring-ai-gemini-ollama-configuration}}
-	\end{center}
 \end{frame}
