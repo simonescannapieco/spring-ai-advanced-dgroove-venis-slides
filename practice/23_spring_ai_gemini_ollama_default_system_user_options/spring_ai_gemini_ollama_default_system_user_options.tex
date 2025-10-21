@@ -1,0 +1,78 @@
+\section{\faWrench\ Defaults} % (fold)
+\label{sec:spring-ai-defaults}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI defaults}
+    \framesubtitle{Descrizione}
+    {\scriptsize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Valori pre-configurati di Spring AI
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] Applicati a fronte della creazione di un \texttt{ChatClient}
+            \item[\alert{\faArrowCircleRight}] Eventualmente sovrascrivibili prima della effettiva \texttt{call()} 
+        \end{itemize}
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Tipologie di \textit{default}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{ruolo} (\texttt{chatClient.defaultSystem(...)} e \texttt{chatClient.defaultUser(...)})
+            \onslide<4->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{\textit{controlli di \textit{output} LLM}} (\texttt{chatClient.defaultOptions(ChatOptions.builder().temperature(0.1).build())})
+            \onslide<5->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{\textit{advisor}} registrati per \textit{logging}/filtri (\texttt{chatClient.defaultAdvisors(...)})
+            \onslide<6->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{\textit{strumenti/funzioni}} a disposizione del LLM (\texttt{chatClient.defaultTools(List.of(myToolClassInstance))})
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \item[\alert{\faArrowCircleRight}] Impostazioni di \textit{default} per \texttt{ChatClient} Ollama (\textit{system}, \textit{user}, \textit{options})
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Modifica configurazioni \textit{bean} per Ollama
+            \onslide<3->\item[\alertedcircled{2}] Modifica interfaccia del servizio
+            \onslide<4->\item[\alertedcircled{3}] Modifica implementazione del servizio
+            \onslide<5->\item[\alertedcircled{4}] Modifica del controllore MVC
+            \onslide<6->\item[\alertedcircled{5}] \textit{Test} delle funzionalità con Postman/Insomnia 
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione multi LLM}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Gemini + Ollama}
+			{\tiny\inputminted{java}{code/ChatClientConfig.java}}
+    	\end{block}
+
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Servizio multi LLM}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/QuestionService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Servizio multi LLM}
+        \vspace*{-.7cm}
+        \begin{block}{Implementazione servizio}
+			{\tiny\inputminted{java}{code/QuestionServiceImpl.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{MVC del servizio multi LLM}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{2-spring-ai-gemini-ollama-default-system-user-options}}
+	\end{center}
+\end{frame}
