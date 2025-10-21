@@ -1,6 +1,31 @@
 \section{\faWrench\ Setup progetto Spring AI\\{\small Multi-configurazione}} % (fold)
 \label{sec:spring-ai-project-setup}
 %
+\begin{frame}[t,fragile] \frametitle{Applicazioni business}
+    \framesubtitle{Perché approccio multi configurazione?}
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Selezione modello LLM inn base alla \textit{task}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] Ragionamento complesso richiede modelli più potenti
+            \item[\alert{\faArrowCircleRight}] Richieste semplici affidate a modelli più contenuti
+            \item[\alert{\faArrowCircleRight}] Creazione \textit{pipeline} con LLM specializzati in sotto-\textit{task}
+        \end{itemize}
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Strategia di \textit{fallback}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] Molteplici configurazioni permettono \textit{switch} automatici a modelli secondari se il primario non risponde
+        \end{itemize}
+        \onslide<3->\item[\alert{\faArrowCircleRight}] \textit{Test} comparativi
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] In base ad accuratezza, latenza, costi, \ldots
+        \end{itemize}
+        \onslide<4->\item[\alert{\faArrowCircleRight}] Preferenze utente
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] Approccio \textit{user-centric} all'interazione con i modelli
+        \end{itemize}
+\end{itemize}
+\end{frame}
+%
+
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Obiettivo}
     \begin{itemize}[leftmargin=10pt,align=right]
@@ -25,17 +50,26 @@
     \begin{itemize}[leftmargin=10pt,align=right]
         \item[\alert{\faArrowCircleRight}] Stub di progetto Spring AI multi-configurazione (Gemini + Ollama)
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<2->\item[\alertedcircled{1}] Creazione \texttt{docker-compose.yml} per servizio Docker Ollama
-            \onslide<3->\item[\alertedcircled{2}] Creazione \textit{file} variabili di ambiente per servizio Ollama
-            \onslide<4->\item[\alertedcircled{3}] Creazione \textit{script} per \textit{start}, \textit{stop} ed eliminazione servizi Docker 
-            \onslide<5->\item[\alertedcircled{4}] Creazione configurazione multi-LLM
-            \onslide<6->\item[\alertedcircled{5}] Creazione modelli per domanda e risposta
-            \onslide<7->\item[\alertedcircled{6}] Creazione interfaccia ed implementazione del servizio di richiesta
-            \onslide<8->\item[\alertedcircled{7}] Creazione del controllore MVC
-            \onslide<9->\item[\alertedcircled{8}] \textit{Test} delle funzionalità con Postman/Insomnia 
+            \onslide<2->\item[\alertedcircled{1}] Creazione \texttt{application.yml} per applicativo multi LLM
+            \onslide<3->\item[\alertedcircled{2}] Creazione \texttt{docker-compose.yml} per servizio Docker Ollama
+            \onslide<4->\item[\alertedcircled{3}] Creazione \textit{file} variabili di ambiente per servizio Ollama
+            \onslide<5->\item[\alertedcircled{4}] Creazione \textit{script} per \textit{start}, \textit{stop} ed eliminazione servizi Docker 
+            \onslide<6->\item[\alertedcircled{5}] Creazione configurazione multi-LLM
+            \onslide<7->\item[\alertedcircled{6}] Creazione modelli per domanda e risposta
+            \onslide<8->\item[\alertedcircled{7}] Creazione interfaccia ed implementazione del servizio di richiesta
+            \onslide<9->\item[\alertedcircled{8}] Creazione del controllore MVC
+            \onslide<10->\item[\alertedcircled{9}] \textit{Test} delle funzionalità con Postman/Insomnia 
         \end{itemize}
     \end{itemize}
     }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione applicativo}
+        \vspace*{-.7cm}
+        \begin{block}{\textit{File} \texttt{application.yml}}
+			{\tiny\inputminted{yaml}{code/application.yml}}
+    	\end{block}
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
@@ -127,7 +161,7 @@
 \begin{frame}[fragile] \frametitle{Codice}
     \framesubtitle{Branch di riferimento}
 	\begin{center}
-		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-base-dgroove-venis-code.git}}}\\
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
 		\textit{Branch:} \alert{\texttt{1-spring-ai-gemini-ollama-configuration}}
 	\end{center}
 \end{frame}

@@ -14,15 +14,17 @@ public class QuestionController {
     private final QuestionService service;
 
     public QuestionController(QuestionService service) {
-
         this.service = service;
-
     }
 
-    @PostMapping("/client/ask")
-    public Answer askQuestion(@RequestBody Question question) {
-
-        return this.service.getAnswer(question);
-
+    @PostMapping("/gemini/ask")
+    public Answer geminiAskQuestion(@RequestBody Question question) {
+        return this.service.getGeminiAnswer(question);
     }
+
+    @PostMapping("/ollama/ask")
+    public Answer ollamaAskQuestion(@RequestBody Question question) {
+        return this.service.getOllamaAnswer(question);
+    }
+
 }

@@ -5,18 +5,16 @@ import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class ChatClientConfig {
 
     @Bean
-    @Primary
-    public ChatClient openAiChatClient(OpenAiChatModel openaiChatModel) {
-        return ChatClient.create(openaiChatModel);
+    public ChatClient geminiChatClient(OpenAiChatModel geminiChatClient) {
+        return ChatClient.create(geminiChatClient);
         /*
          * or:
-         * ChatClient.Builder chatClientBulder = ChatClient.builder(openaiChatModel);
+         * ChatClient.Builder chatClientBulder = ChatClient.builder(geminiChatClient);
          * return chatClientBulder.build();
          */
     }
