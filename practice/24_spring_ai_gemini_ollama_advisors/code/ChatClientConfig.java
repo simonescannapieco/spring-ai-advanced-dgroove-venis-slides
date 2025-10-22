@@ -11,7 +11,7 @@ public class ChatClientConfig {
     public ChatClient ollamaChatClient(OllamaChatModel ollamaChatModel) {
         ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel);
         return chatClientBuilder
-                .defaultAdvisors(new SimpleLoggerAdvisor(), new OllamaCostSavingsAdvisor())
+                .defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new OllamaCostSavingsAdvisor()))
                 .defaultSystem(
                         """
                             Sei un assistente AI di nome LLamaBot, addestrato per intrattenere una
