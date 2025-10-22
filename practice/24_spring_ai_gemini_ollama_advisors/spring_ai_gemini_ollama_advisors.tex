@@ -1,0 +1,110 @@
+\section{\faWrench\ Advisors} % (fold)
+\label{sec:spring-ai-advisors}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI advisors}
+    \framesubtitle{Descrizione}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Entità in grado di intercettare
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] la \textit{request} dal \texttt{ChatClient} al LLM
+            \item[\alert{\faArrowCircleRight}] la \textit{response} del LLM prima che arrivi all'utente
+        \end{itemize}
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Utilizzi \textit{advisors}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Pre-/post-processamento dei dati al/dal LLM
+            \onslide<4->\item[\alert{\faArrowCircleRight}] Validazione/filtraggio customizzato
+            \onslide<5->\item[\alert{\faArrowCircleRight}] Creare flussi di processamento puliti e sequenziali
+        \end{itemize}
+        \onslide<6->\item[\alert{\faArrowCircleRight}] Linee guida di buon utilizzo
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<7->\item[\alert{\faArrowCircleRight}] Evitare comportamenti \textit{session-scoped}
+            \onslide<8->\item[\alert{\faArrowCircleRight}] Creare più \textit{advisors} in catena piuttosto che un unico \textit{advisor} complesso
+            \onslide<9->\item[\alert{\faArrowCircleRight}] Evitare comportamenti che intacchino la logica del sistema (es. \alert{no modifiche al \textit{prompt}})
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI advisors}
+    \framesubtitle{Tipologie}
+    \vspace*{-.7cm}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] \textit{Advisors built-in}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \alert{\texttt{SimpleLoggerAdvisor}} riporta informazione dettagliata delle strutture di \textit{request} e di \textit{response}
+            \onslide<3->\item[\alert{\faArrowCircleRight}] \alert{\texttt{SafeGuardAdvisor}} valida la \textit{request} utente relativamente ad una \textit{blacklist}
+            \onslide<4->\item[\alert{\faArrowCircleRight}] \alert{\texttt{PromptChatMemoryAdvisor}} recupera e copia la memoria nel \textit{prompt} come contesto di sistema 
+            \onslide<5->\item[\alert{\faArrowCircleRight}] \ldots
+        \end{itemize}
+        \onslide<6->\item[\alert{\faArrowCircleRight}] \textit{Advisor} utente
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<7->\item[\alert{\faArrowCircleRight}] Devono implementare \texttt{CallAdvisor} \alert{e/o} \texttt{StreamAdvisor}
+        \end{itemize}
+    \end{itemize}
+    \onslide<8->
+    \begin{block}{Configurazione statica}
+		{\tiny\inputminted{java}{code/DefaultAdvisorsExample.java}}
+    \end{block}
+    \onslide<9->
+    \begin{block}{Configurazione dinamica}
+		{\tiny\inputminted{java}{code/AdvisorsExample.java}}
+    \end{block}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \item[\alert{\faArrowCircleRight}] \textit{Advisors} per \texttt{ChatClient} Ollama
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Modifica \texttt{application.yml} per gestione \textit{logging}
+            \onslide<3->\item[\alertedcircled{2}] Modifica configurazioni di \texttt{ChatClient} per Ollama
+            \onslide<4->\item[\alertedcircled{3}] Creazione modello per gestore prezzi
+            \onslide<5->\item[\alertedcircled{4}] Creazione \textit{advisor} per calcolo risparmio economico Ollama
+            \onslide<6->\item[\alertedcircled{5}] \textit{Test} delle funzionalità con Postman/Insomnia 
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione \textit{logging}}
+			{\tiny\inputminted{java}{code/application.yml}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Gemini + Ollama}
+			{\tiny\inputminted{java}{code/ChatClientConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \begin{block}{Modello di gestione costi}
+			{\tiny\inputminted{java}{code/ModelPricing.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \vspace*{-.7cm}
+        \begin{block}{\textit{Advisor} per risparmio Ollama}
+			{\tiny\inputminted{java}{code/OllamaCostSavingsAdvisor.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{3-spring-ai-gemini-ollama-advisors}}
+	\end{center}
+\end{frame}
