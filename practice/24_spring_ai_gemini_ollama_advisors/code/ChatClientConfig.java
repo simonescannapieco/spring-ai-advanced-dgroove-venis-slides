@@ -1,36 +1,15 @@
 package it.venis.ai.spring.demo.config;
 
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import it.venis.ai.spring.demo.advisors.OllamaCostSavingsAdvisor;
+...
 
 @Configuration
 public class ChatClientConfig {
 
-    @Bean
-    public ChatClient geminiChatClient(OpenAiChatModel geminiChatClient) {
-
-        return ChatClient.create(geminiChatClient);
-
-        /*
-         * or:
-         * ChatClient.Builder chatClientBuilder = ChatClient.builder(geminiChatClient);
-         * return chatClientBulder.build();
-         */
-
-    }
+   ...
 
     @Bean
     public ChatClient ollamaChatClient(OllamaChatModel ollamaChatModel) {
-
         ChatClient.Builder chatClientBuilder = ChatClient.builder(ollamaChatModel);
-
         return chatClientBuilder
                 .defaultAdvisors(new SimpleLoggerAdvisor(), new OllamaCostSavingsAdvisor())
                 .defaultSystem(
