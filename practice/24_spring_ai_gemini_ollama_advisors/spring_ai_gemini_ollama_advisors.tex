@@ -15,6 +15,10 @@
             \onslide<3->\item[\alert{\faArrowCircleRight}] Pre-/post-processamento dei dati al/dal LLM
             \onslide<4->\item[\alert{\faArrowCircleRight}] Validazione/filtraggio customizzato
             \onslide<5->\item[\alert{\faArrowCircleRight}] Creare flussi di processamento puliti e sequenziali
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faExclamationTriangle}] Possibile fornire una priorità
+                \item[\alert{\faExclamationTriangle}] Con ugual priorità, il sistema sceglie un ordinamento \textit{random}
+            \end{itemize}
         \end{itemize}
         \onslide<6->\item[\alert{\faArrowCircleRight}] Linee guida di buon utilizzo
         \begin{itemize}[leftmargin=10pt,align=right]
@@ -33,10 +37,18 @@
     \begin{itemize}[leftmargin=10pt,align=right]
         \onslide<1->\item[\alert{\faArrowCircleRight}] \textit{Advisors built-in}
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<2->\item[\alert{\faArrowCircleRight}] \alert{\texttt{SimpleLoggerAdvisor}} riporta informazione dettagliata delle strutture di \textit{request} e di \textit{response}
-            \onslide<3->\item[\alert{\faArrowCircleRight}] \alert{\texttt{SafeGuardAdvisor}} valida la \textit{request} utente relativamente ad una \textit{blacklist}
-            \onslide<4->\item[\alert{\faArrowCircleRight}] \alert{\texttt{PromptChatMemoryAdvisor}} recupera e copia la memoria nel \textit{prompt} come contesto di sistema 
-            \onslide<5->\item[\alert{\faArrowCircleRight}] \ldots
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \textit{Logging}
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{SimpleLoggerAdvisor}} riporta informazione dettagliata delle strutture di \textit{request} e di \textit{response}
+            \end{itemize}
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Validazione/filtraggio
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{SafeGuardAdvisor}} valida la \textit{request} utente relativamente ad una \textit{blacklist}
+            \end{itemize}
+            \onslide<4->\item[\alert{\faArrowCircleRight}] Gestione memoria conversazione
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{PromptChatMemoryAdvisor}} recupera e copia la memoria nel \textit{prompt} come contesto di sistema
+            \end{itemize}
         \end{itemize}
         \onslide<6->\item[\alert{\faArrowCircleRight}] \textit{Advisor} utente
         \begin{itemize}[leftmargin=10pt,align=right]

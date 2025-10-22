@@ -10,7 +10,7 @@
                         logger.info(String.format("   >>> %-25s: %.6f USD", entry.getKey(), entry.getValue()));
                     });
 
-            logger.info("╚══════════════════════════════════════════════════════════════╝");
+            logger.info("----------------------------------------------------------------");
         }
 
         return chatClientResponse;
