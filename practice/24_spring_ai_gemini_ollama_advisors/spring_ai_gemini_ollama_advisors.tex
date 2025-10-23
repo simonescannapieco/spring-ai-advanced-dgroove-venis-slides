@@ -46,20 +46,20 @@
                 \item[\alert{\faArrowCircleRight}] \alert{\texttt{SafeGuardAdvisor}} valida la \textit{request} utente relativamente ad una \textit{blacklist}
             \end{itemize}
             \onslide<4->\item[\alert{\faArrowCircleRight}] Gestione memoria conversazione
-            \begin{itemize}[leftmargin=10pt,align=right]
-                \item[\alert{\faArrowCircleRight}] \alert{\texttt{PromptChatMemoryAdvisor}} recupera e copia la memoria nel \textit{prompt} come contesto di sistema
-            \end{itemize}
+            %\begin{itemize}[leftmargin=10pt,align=right]
+            %    \item[\alert{\faArrowCircleRight}] \alert{\texttt{PromptChatMemoryAdvisor}} recupera e copia la memoria nel \textit{prompt} come contesto di sistema
+            %\end{itemize}
         \end{itemize}
-        \onslide<6->\item[\alert{\faArrowCircleRight}] \textit{Advisor} utente
+        \onslide<5->\item[\alert{\faArrowCircleRight}] \textit{Advisor} utente
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<7->\item[\alert{\faArrowCircleRight}] Devono implementare \texttt{CallAdvisor} \alert{e/o} \texttt{StreamAdvisor}
+            \onslide<6->\item[\alert{\faArrowCircleRight}] Devono implementare \texttt{CallAdvisor} \alert{e/o} \texttt{StreamAdvisor}
         \end{itemize}
     \end{itemize}
-    \onslide<8->
+    \onslide<7->
     \begin{block}{Configurazione statica}
 		{\tiny\inputminted{java}{code/DefaultAdvisorsExample.java}}
     \end{block}
-    \onslide<9->
+    \onslide<8->
     \begin{block}{Configurazione dinamica}
 		{\tiny\inputminted{java}{code/AdvisorsExample.java}}
     \end{block}
