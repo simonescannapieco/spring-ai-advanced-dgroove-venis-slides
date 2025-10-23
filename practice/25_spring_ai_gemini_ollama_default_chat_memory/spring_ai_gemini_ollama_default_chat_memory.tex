@@ -1,0 +1,177 @@
+\section{\faWrench\ Default Chat Memory} % (fold)
+\label{sec:spring-ai-default-chat-memory}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI Chat Memory}
+    \framesubtitle{Principi fondamentali}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faExclamationTriangle}] LLM sono \alert{\textit{stateless}}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] Non sono concepiti per ricordare conversazioni precedenti
+            \item[\alert{\faArrowCircleRight}] Ogni interazione con LLM avviene senza supporto di una memoria di sistema
+            \item[\alert{\faExclamationTriangle}] Passaggio da \alert{interazione domanda/risposta} a una \alert{conversazione}???
+        \end{itemize}
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Approccio astratto Spring AI
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] \alert{\texttt{ChatMemory}} decide la \alert{strategia} di gestione della memoria
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] Quali messaggi salvare
+                \item[\alert{\faArrowCircleRight}] Quando rimuovere un messaggio
+        \end{itemize}
+            \onslide<4->\item[\alert{\faArrowCircleRight}] \alert{\texttt{ChatMemoryRepository}} si occupa del CRUD dei messaggi
+        \end{itemize}
+        \onslide<5->\item[\alert{\faArrowCircleRight}] Strategie di gestione memoria (WIP)
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<6->\item[\alertedcircled{1}] Salvataggio ultimi $n$ messaggi
+            \onslide<7->\item[\alertedcircled{2}] Salvataggio messaggi entro una finestra temporale
+            \onslide<8->\item[\alertedcircled{3}] Salvataggio entro un numero prestabilito di \textit{token}
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI Chat Memory/Memory Repository}
+    \framesubtitle{Implementazioni di default}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] \texttt{ChatMemory}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \alert{\texttt{MessageWindowChatMemory}} implementa la strategia \alertedcircled{1}
+                \begin{itemize}[leftmargin=10pt,align=right]
+                    \onslide<3->\item[\alert{\faArrowCircleRight}] Finestra di \textit{default} impostata a 20
+                    \onslide<4->\item[\alert{\faArrowCircleRight}] Auto-configurazione di Spring AI per \textit{bean} \texttt{ChatMemory}
+                    \onslide<5->\item[\alert{\faArrowCircleRight}] Modificabile invocando \texttt{maxMessages()}
+                    \begin{block}{Configurazione statica}
+			            {\tiny\inputminted{java}{code/MessageWindowChatMemoryExample.java}}
+    	            \end{block}
+                \end{itemize}
+        \end{itemize}
+        \onslide<6->\item[\alert{\faArrowCircleRight}] \texttt{ChatMemoryRepository}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<7->\item[\alert{\faArrowCircleRight}] \alert{\texttt{InMemoryChatMemoryRepository}} recupera e salva messaggi in memoria
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<8->\item[\alert{\faArrowCircleRight}] Utilizzo di \texttt{ConcurrentHashMap} per gestione multi-sessione
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI Chat Memory advisors}
+    \framesubtitle{Memoria attraverso ChatClient}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Come usare tutto questo con \texttt{ChatClient}?! 
+        \onslide<2->\item[\alert{\faArrowCircleRight}] \alert{\textit{Chat memory advisor}}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Anello di congiunzione fra
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] Sistema di gestione/CRUD memoria
+                \item[\alert{\faArrowCircleRight}] Sistema di aggiunta di contesto al \textit{prompt}
+            \end{itemize}
+            \onslide<4->\item[\alert{\faArrowCircleRight}] Implementazioni di \alert{\texttt{BaseChatMemoryAdvisor}}
+            \onslide<5->\item[\alert{\faArrowCircleRight}] Recuperano lo storico della conversazione dalla memoria e la includono    
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] nel \textit{prompt} come lista di messaggi (\alert{\texttt{MessageChatMemoryAdvisor}})
+                \item[\alert{\faArrowCircleRight}] nel \textit{prompt} di sistema in formato testuale (\alert{\texttt{PromptChatMemoryAdvisor}})
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    {\footnotesize
+	    \begin{table}
+		    %% increase table row spacing, adjust to taste
+		    \setlength{\tabcolsep}{5pt}
+		    \renewcommand{\arraystretch}{1.3}
+		    \centering
+		    \begin{tabular}{p{3.5cm}ll}
+		        \toprule
+		        \textbf{Advisor}                  & \textbf{Formato storico}      & \textbf{Caso utilizzo}           \\
+		        \midrule
+                \texttt{MessageChatMemoryAdvisor} & Lista di messaggi strutturati & \textit{Chatbot} più performanti \\
+                \texttt{PromptChatMemoryAdvisor}  & Testo puro                    & Limitazioni economiche           \\
+			    \bottomrule
+			\end{tabular}
+		\end{table}
+	}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Spring AI Chat Memory advisors}
+    \framesubtitle{Caso d'uso}
+    \vspace*{-.7cm}
+    {\footnotesize
+        \begin{block}{Setup minimale}
+			{\tiny\inputminted{java}{code/BasicMemoryAwareChatClientExample.java}}
+    	\end{block}
+    }
+\end{frame}
+
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \item[\alert{\faArrowCircleRight}] Configurazioni \textit{bean} per \textit{default chat memory} per \texttt{ChatClient} Ollama
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Modifica configurazioni di \texttt{ChatClient} per Ollama
+            \onslide<3->\item[\alertedcircled{2}] Modifica interfaccia e implementazione del servizio di risposta
+            \onslide<4->\item[\alertedcircled{3}] Modifica controllore MVC
+            \onslide<5->\item[\alertedcircled{4}] \textit{Test} delle funzionalità con Postman/Insomnia 
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Gemini + Ollama - I}
+			{\tiny\inputminted{java}{code/MemoryChatClientConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Gemini + Ollama - II}
+			{\tiny\inputminted{java}{code/MemoryChatClientConfig-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Advisors}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Gemini + Ollama - III}
+			{\tiny\inputminted{java}{code/MemoryChatClientConfig-3.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Servizio multi LLM}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/QuestionService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Servizio multi LLM}
+        \vspace*{-.7cm}
+        \begin{block}{Implementazione servizio}
+			{\tiny\inputminted{java}{code/QuestionServiceImpl.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{MVC del servizio multi LLM}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{4-spring-ai-gemini-ollama-default-chat-memory}}
+	\end{center}
+\end{frame}
