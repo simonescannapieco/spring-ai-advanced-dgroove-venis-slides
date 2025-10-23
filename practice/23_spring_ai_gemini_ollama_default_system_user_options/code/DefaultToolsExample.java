@@ -1,0 +1,1 @@
+chatClient.defaultTools(List.of(...)).build();

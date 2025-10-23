@@ -12,10 +12,18 @@
         \end{itemize}
         \onslide<2->\item[\alert{\faArrowCircleRight}] Tipologie di \textit{default}
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<3->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{ruolo} (\texttt{chatClient.defaultSystem(...)} e \texttt{chatClient.defaultUser(...)})
-            \onslide<4->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{\textit{controlli di \textit{output} LLM}} (\texttt{chatClient.defaultOptions(ChatOptions.builder().temperature(0.1).build())})
-            \onslide<5->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{\textit{advisor}} registrati per \textit{logging}/filtri (\texttt{chatClient.defaultAdvisors(...)})
-            \onslide<6->\item[\alert{\faArrowCircleRight}] \textit{Default} per \alert{\textit{strumenti/funzioni}} a disposizione del LLM (\texttt{chatClient.defaultTools(List.of(myToolClassInstance))})
+            \onslide<3->\begin{block}{\textit{Default} per ruolo}
+			    {\tiny\inputminted{java}{code/DefaultSystemUserExample.java}}
+    	    \end{block}
+            \onslide<4->\begin{block}{\textit{Default} per controlli di \textit{output} LLM}
+			    {\tiny\inputminted{java}{code/DefaultOptionsExample.java}}
+    	    \end{block}
+            \onslide<5->\begin{block}{\textit{Default} per \textit{advisors}}
+			    {\tiny\inputminted{java}{code/DefaultAdvisorsExample.java}}
+    	    \end{block}
+            \onslide<6->\begin{block}{\textit{Default} per \textit{tools}}
+			    {\tiny\inputminted{java}{code/DefaultToolsExample.java}}
+    	    \end{block}
         \end{itemize}
     \end{itemize}
     }
@@ -38,7 +46,7 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Configurazione multi LLM}
+    \framesubtitle{Defaults}
         \vspace*{-.7cm}
         \begin{block}{Configurazione Gemini + Ollama}
 			{\tiny\inputminted{java}{code/ChatClientConfig.java}}
@@ -47,14 +55,14 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Servizio multi LLM}
+    \framesubtitle{Defaults}
         \begin{block}{Interfaccia servizio}
 			{\tiny\inputminted{java}{code/QuestionService.java}}
     	\end{block}
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Servizio multi LLM}
+    \framesubtitle{Defaults}
         \vspace*{-.7cm}
         \begin{block}{Implementazione servizio}
 			{\tiny\inputminted{java}{code/QuestionServiceImpl.java}}
@@ -62,7 +70,7 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{MVC del servizio multi LLM}
+    \framesubtitle{Defaults}
     	\vspace*{-.7cm}
         \begin{block}{Implementazione controllore REST}
 			{\tiny\inputminted{java}{code/QuestionController.java}}

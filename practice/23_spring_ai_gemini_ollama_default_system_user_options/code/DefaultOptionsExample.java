@@ -1,0 +1,1 @@
+chatClient.defaultOptions(ChatOptions.builder().temperature(0.1).build()).build();

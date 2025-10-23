@@ -1,0 +1,1 @@
+chatClient.defaultAdvisors(List.of(...)).build();
