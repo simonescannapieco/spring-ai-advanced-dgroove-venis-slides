@@ -1,0 +1,5 @@
+<dependency>                                         <dependency>
+    <groupId>org.springframework.boot</groupId>          <groupId>com.h2database</groupId>
+    <artifactId>spring-boot-devtools</artifactId>        <artifactId>h2</artifactId>
+    <optional>true</optional>                            <scope>runtime</scope>
+</dependency>                                        </dependency>
