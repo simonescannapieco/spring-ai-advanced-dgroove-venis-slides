@@ -1,0 +1,97 @@
+\section{\faWrench\ Chat Memory\\{\small Concetti avanzati}} % (fold)
+\label{sec:spring-ai-advanced-chat-memory}
+%
+\begin{frame}[t,fragile] \frametitle{Concetti avanzati}
+    \framesubtitle{Per-User Chat Memory}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Come tenere traccia di diverse conversazioni?
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \texttt{ChatMemory} definita secondo una logica \alert{multi-conversazione}
+            \onslide<3->\begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faExclamationTriangle}] \alert{\texttt{CONVERSATION\_ID}} chiave che il sistema ricerca nel contesto per CRUD storico messaggistica
+                \item[\alert{\faExclamationTriangle}] \alert{\texttt{DEFAULT\_CONVERSATION\_ID}} valore di \textit{default} fornito alla chiave se non popolata programmaticamente
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    }
+    \begin{block}{Interfaccia Chat Memory}
+		{\tiny\inputminted{java}{code/ChatMemory.java}}
+    \end{block}
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Concetti avanzati}
+    \framesubtitle{Per-User Chat Memory}
+    \vspace*{-.7cm}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Come sovrascrivere il valore di \textit{default}?
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Agire a livello di \textit{chat memory advisor}
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Utilizzo delle \textit{advisor specifications} di \texttt{ChatClient} (\alert{\texttt{ChatClient\$AdvisorSpec}})
+        \end{itemize}
+    \end{itemize}
+    \onslide<2->
+    \begin{block}{Interfaccia per ogni \textit{chat memory advisor}}
+		{\tiny\inputminted{java}{code/BaseChatMemoryAdvisor.java}}
+    \end{block}
+    \onslide<3->
+    \begin{block}{Customizzazione \textit{id} conversazione}
+		{\tiny\inputminted{java}{code/AdvisorSpecExample.java}}
+    \end{block}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \item[\alert{\faArrowCircleRight}] Configurazione \textit{per-user chat memory} per \texttt{ChatClient} Ollama
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Creazione modello per richiesta domanda con \textit{username}
+            \onslide<3->\item[\alertedcircled{2}] Modifica interfaccia e implementazione del servizio di risposta
+            \onslide<4->\item[\alertedcircled{3}] Modifica controllore MVC
+            \onslide<5->\item[\alertedcircled{4}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Per-user chat memory}
+        \begin{block}{Modello richiesta con \textit{username}}
+			{\tiny\inputminted{java}{code/QuestionRequest.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Per-user chat memory}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/QuestionService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Per-user chat memory}
+        \vspace*{-.7cm}
+        \begin{block}{Implementazione servizio}
+			{\tiny\inputminted{java}{code/QuestionServiceImpl.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Per-user chat memory}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{5-spring-ai-gemini-ollama-per-user-chat-memory}}
+	\end{center}
+\end{frame}
+%
