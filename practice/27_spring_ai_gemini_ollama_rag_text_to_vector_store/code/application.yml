@@ -1,0 +1,24 @@
+spring:
+    ...
+    autoconfigure:
+        exclude:
+        - org.springframework.ai.vectorstore.qdrant.autoconfigure.QdrantVectorStoreAutoConfiguration
+        # We must disable Vector Store auto-configuration because of two different EmbeddingModel beans
+        # (OpenAI-Gemini and Ollama). The goal is to have two different vector collections, one for each
+        # family of LLM.
+    ai:
+        ollama:
+            ...
+            embedding:
+                model: hf.co/Simone-Scannapieco/sentence-bert-base-italian-xxl-uncased-F32-GGUF
+        openai:
+            ...
+            embedding:
+                options:
+                    model: gemini-embedding-001
+        vectorstore:
+            qdrant:
+                initialize-schema: true
+                host: 172.17.0.1
+                port: 6334          
+    ...

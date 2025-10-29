@@ -1,0 +1,10 @@
+{
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.test.config": {
+        "env": {
+            "GOOGLE_AI_API_KEY": "...",
+            "HUGGING_FACE_HUB_TOKEN": "..."
+        }
+    }
+}
