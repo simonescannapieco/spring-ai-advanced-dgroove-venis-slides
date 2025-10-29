@@ -1,7 +1,7 @@
 \section{\faWrench\ Retrieval Augmented Generation\\{\small Parte 1}} % (fold)
 \label{sec:spring-ai-rag-part-1}
 %
-\begin{frame}[t,fragile] \frametitle{retrieval Augmented Generation}
+\begin{frame}[t,fragile] \frametitle{Retrieval Augmented Generation}
     \framesubtitle{Persistent Chat Memory}
     {\footnotesize
     \begin{itemize}[leftmargin=10pt,align=right]
@@ -27,7 +27,7 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Ambiente di sviluppo}
-\framesubtitle{Gemini API - 4 - Configurazione credenziali}
+\framesubtitle{Creazione account HuggingFace}
 	\vspace*{-.5cm}
     {\footnotesize
     \begin{itemize}
@@ -36,7 +36,7 @@
         \only<3|handout:3>{\item[\alertedcircled{3}] Accedere al portale e selezionare \texttt{Access tokens} nel menu in alto a destra}
         \only<4|handout:4>{\item[\alertedcircled{4}] Premere sul pulsante \texttt{Create new token}}
         \only<5|handout:5>{\item[\alertedcircled{5}] Selezionare \textit{token} di tipo \texttt{Write}, denominare il \textit{token} e premere \texttt{Create token}}
-        \only<6|handout:6>{\item[\alertedcircled{6}] Cercare il modello di \textit{embedding}, leggendone la \textit{card}} 
+        \only<6-7|handout:6-7>{\item[\alertedcircled{6}] Cercare il modello di \textit{embedding}, leggendone la \textit{card}} 
     \end{itemize}
     }
     \vfill
@@ -65,6 +65,16 @@
         \only<5|handout:5>{
 		    \begin{figure}[ht]
 			    \includegraphics[width=\textwidth, frame]{img/huggingface-portal-access-token-create-write-token.png}
+		    \end{figure}
+        }
+        \only<6|handout:6>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/huggingface-search-bert-ita.png}
+		    \end{figure}
+        }
+        \only<7|handout:7>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/huggingface-model-card.png}
 		    \end{figure}
         }
 	\end{minipage}
