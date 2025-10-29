@@ -1,26 +1,24 @@
 \section{\faWrench\ Retrieval Augmented Generation\\{\small Parte 1}} % (fold)
 \label{sec:spring-ai-rag-part-1}
 %
-\begin{frame}[t,fragile] \frametitle{Retrieval Augmented Generation}
-    \framesubtitle{Persistent Chat Memory}
-    {\footnotesize
-    \begin{itemize}[leftmargin=10pt,align=right]
-        \onslide<1->\item[\alert{\faExclamationTriangle}] Storico della conversazione valida per singola sessione
-    \end{itemize}
-    }
-\end{frame}
-%
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Applicazione e passaggi}
     {\small
     \begin{itemize}[leftmargin=10pt,align=right]
-        \item[\alert{\faArrowCircleRight}] Configurazione \textit{JDBC H2 chat memory} per \texttt{ChatClient} Ollama
+        \onslide<1->\item[\alert{\faArrowCircleRight}] \textit{Chatbot} Ollama-CV e Gemini-Venis
+        \onslide<2->\item[\faExclamationTriangle] Approccio \textit{naive} (informazione testuale estratta tramite GENAI-\textit{assisted} \textit{web scraping}/\textit{summarization})
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<2->\item[\alertedcircled{1}] Modifica al \texttt{pom.xml} per dipendenze Spring AI JDBC, H2 e \textit{devtools}
-            \onslide<3->\item[\alertedcircled{2}] Modifica ad \texttt{application.yml}
-            \onslide<4->\item[\alertedcircled{3}] Creazione schema H2
-            \onslide<5->\item[\alertedcircled{4}] Modifica ai \textit{bean} \texttt{ChatClient} per Ollama
-            \onslide<6->\item[\alertedcircled{5}] \textit{Test} delle funzionalità con Postman/Insomnia
+            \onslide<2->\item[\alertedcircled{1}] Iscrizione al portale HuggingFace e creazione \textit{access token}
+            \onslide<3->\item[\alertedcircled{2}] Verifica e modifica variabili di ambiente
+            \onslide<4->\item[\alertedcircled{3}] Creazione configurazione ambiente Docker Qdrant
+            \onslide<5->\item[\alertedcircled{4}] Modifica dipendenze di progetto
+            \onslide<6->\item[\alertedcircled{5}] Modifica configurazione applicativo
+            \onslide<7->\item[\alertedcircled{6}] Creazione \textit{prompt templates} per strategia RAG
+            \onslide<8->\item[\alertedcircled{7}] Configurazione \textit{vector store} per Ollama e Gemini \textit{embeddings}
+            \onslide<9->\item[\alertedcircled{8}] Creazione \textit{component} per popolamento \textit{vector store} (dati Venis e CV)
+            \onslide<10->\item[\alertedcircled{9}] Creazione interfaccia e implementazione del servizio
+            \onslide<11->\item[\alertedcircled{10}] Modifica controllore MVC
+            \onslide<12->\item[\alertedcircled{11}] \textit{Test} delle funzionalità con Postman/Insomnia
         \end{itemize}
     \end{itemize}
     }
@@ -31,9 +29,9 @@
 	\vspace*{-.5cm}
     {\footnotesize
     \begin{itemize}
-        \only<1|handout:1>{\item[\alertedcircled{1}] Accedere al portale \url{https://huggingface.co/}}
-        \only<2|handout:2>{\item[\alertedcircled{2}] Creare una nuova utenza premendo il pulsante \texttt{Sign up}}
-        \only<3|handout:3>{\item[\alertedcircled{3}] Accedere al portale e selezionare \texttt{Access tokens} nel menu in alto a destra}
+        \only<1|handout:1>{\item[\alertedcircled{1}] Accedere al portale \url{https://huggingface.co/} e cliccare il pulsante \texttt{Sign up}}
+        \only<2|handout:2>{\item[\alertedcircled{2}] Creare una nuova utenza}
+        \only<3|handout:3>{\item[\alertedcircled{3}] Accedere al portale e selezionare \texttt{Access Tokens} nel menu in alto a destra}
         \only<4|handout:4>{\item[\alertedcircled{4}] Premere sul pulsante \texttt{Create new token}}
         \only<5|handout:5>{\item[\alertedcircled{5}] Selezionare \textit{token} di tipo \texttt{Write}, denominare il \textit{token} e premere \texttt{Create token}}
         \only<6-7|handout:6-7>{\item[\alertedcircled{6}] Cercare il modello di \textit{embedding}, leggendone la \textit{card}} 
@@ -161,8 +159,17 @@
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{RAG}
-        \begin{block}{Componente popolamento Qdrant}
+        \vspace*{-.7cm}
+        \begin{block}{Componente popolamento Qdrant - I}
 			{\tiny\inputminted{java}{code/TextDataLoader.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG}
+        \vspace*{-.7cm}
+        \begin{block}{Componente popolamento Qdrant - II}
+			{\tiny\inputminted{java}{code/TextDataLoader-2.java}}
     	\end{block}
 \end{frame}
 %
@@ -176,8 +183,24 @@
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{RAG}
         \vspace*{-.7cm}
-        \begin{block}{Implementazione servizio}
+        \begin{block}{Implementazione servizio - I}
 			{\tiny\inputminted{java}{code/RAGServiceImpl.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG}
+        \vspace*{-.7cm}
+        \begin{block}{Implementazione servizio - II}
+			{\tiny\inputminted{java}{code/RAGServiceImpl-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG}
+        \vspace*{-.7cm}
+        \begin{block}{Implementazione servizio - III}
+			{\tiny\inputminted{java}{code/RAGServiceImpl-3.java}}
     	\end{block}
 \end{frame}
 %
@@ -194,7 +217,7 @@
 	\vspace*{-.5cm}
     {\footnotesize
     \begin{itemize}
-        \only<1|handout:1>{\item[\alertedcircled{1}] Verificare la \textit{dashboard} Qdrant (\texttt{http://172.17.0.1:6333/dashboard})
+        \only<1|handout:1>{\item[\faExclamationTriangle] Verificare la \textit{dashboard} Qdrant (\texttt{http://172.17.0.1:6333/dashboard})
     \end{itemize}
     }
     \vfill
