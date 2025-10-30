@@ -3,6 +3,7 @@ package it.venis.ai.spring.demo.rag;
 ...
 
 @Component
+@Profile("rag-text-to-vector-store")
 public class TextDataLoader {
 
     private final VectorStore geminiVectorStore;
@@ -12,7 +13,6 @@ public class TextDataLoader {
             @Qualifier("ollamaVectorStore") VectorStore ollamaVectorStore) {
         this.geminiVectorStore = geminiVectorStore;
         this.ollamaVectorStore = ollamaVectorStore;
-
     }
 
     @PostConstruct
