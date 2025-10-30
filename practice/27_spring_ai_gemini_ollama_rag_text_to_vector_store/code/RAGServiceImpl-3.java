@@ -1,9 +1,9 @@
     ...
-    @Value("classpath:templates/get-rag-data-system-ita-prompt.st")
+    @Value("${demo.rag.prompt.system.ita}")
     private Resource ragDataSystemItaPrompt;
 
     @Override
-    public Answer getOllamaRAGTextToVectorStoreAnswer(QuestionRequest request) {
+    public Answer getOllamaRAGAnswer(QuestionRequest request) {
 
         SearchRequest searchRequest = SearchRequest.builder()
                 .query(request.body().question())

@@ -12,7 +12,7 @@
             \onslide<3->\item[\alertedcircled{2}] Verifica e modifica variabili di ambiente
             \onslide<4->\item[\alertedcircled{3}] Creazione configurazione ambiente Docker Qdrant
             \onslide<5->\item[\alertedcircled{4}] Modifica dipendenze di progetto
-            \onslide<6->\item[\alertedcircled{5}] Modifica configurazione applicativo
+            \onslide<6->\item[\alertedcircled{5}] Modifica configurazione e profilo applicativo
             \onslide<7->\item[\alertedcircled{6}] Creazione \textit{prompt templates} per strategia RAG
             \onslide<8->\item[\alertedcircled{7}] Configurazione \textit{vector store} per Ollama e Gemini \textit{embeddings}
             \onslide<9->\item[\alertedcircled{8}] Creazione \textit{component} per popolamento \textit{vector store} (dati Venis e CV)
@@ -121,6 +121,13 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG - Profilo applicativo}
+        \begin{block}{File \texttt{application-rag-text-to-vector-store.yml}}
+			{\tiny\inputminted{yaml}{code/application-rag-text-to-vector-store.yml}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Script rimozione volumi Docker}
         \begin{block}{\textit{File} \texttt{erase\_llm\_volumes.sh}}
 			{\tiny\inputminted{bash}{code/erase_llm_volumes.sh}}
@@ -143,7 +150,6 @@
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Configurazione RAG}
-        \vspace*{-.7cm}
         \begin{block}{Configurazione Vector Store - I}
 			{\tiny\inputminted{java}{code/RAGConfig.java}}
     	\end{block}
@@ -151,7 +157,6 @@
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Configurazione RAG}
-        \vspace*{-.7cm}
         \begin{block}{Configurazione Vector Store - II}
 			{\tiny\inputminted{java}{code/RAGConfig-2.java}}
     	\end{block}
