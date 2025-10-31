@@ -1,0 +1,80 @@
+\section{\faWrench\ Spring AI e Docker Model Runner} % (fold)
+\label{sec:spring-ai-docker-model-runner}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Multi configurazione Ollama + Gemma
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] \textit{Pull} modello LLM ed \textit{embedder} in Model Runner
+            \onslide<3->\item[\alertedcircled{2}] \textit{Test} del raggiungimento del servizio \textit{chat/embed} con Postman/Insomnia
+            \onslide<4->\item[\alertedcircled{3}] Creazione profilo applicativo     
+            \onslide<5->\item[\alertedcircled{4}] Modifica proprietà applicativo
+            \onslide<6->\item[\alertedcircled{5}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione Ollama + Gemma}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faExclamationTriangle}] Cercare \textit{embedder} su HuggingFace, con task \texttt{NLP->Sentence similarity} e \texttt{Library->GGUF}
+        \end{itemize}
+        \begin{codeblock}{Caricamento LLM in locale}
+            \begin{minted}{shell-session}
+            docker model pull ai/gemma3
+            docker model pull hf.co/unsloth/embeddinggemma-300m-GGUF
+            \end{minted}
+        \end{codeblock}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione Ollama + Gemma}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faExclamationTriangle}] Utilizzare Postman/Insomnia per chiamate di \textit{test}
+        \end{itemize}
+        \begin{codeblock}{Test raggiungimento servizio \textit{chat}}
+            \begin{minted}{shell-session}
+                curl http://172.17.0.1:12434/engines/llama.cpp/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "ai/gemma3",
+        "messages": [{"role": "user", "content": "Ciao! Come ti chiami?"}]
+        }'
+            \end{minted}
+        \end{codeblock}
+        \begin{codeblock}{Test raggiungimento servizio \textit{embedding}}
+            \begin{minted}{shell-session}
+                curl http://172.17.0.1:12434/engines/llama.cpp/v1/embeddings \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "hf.co/unsloth/embeddinggemma-300m-gguf",
+        "input": "Questa è una frase di prova"
+        }'
+            \end{minted}
+        \end{codeblock}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione Ollama + Gemma}
+        \begin{block}{Configurazione applicativo}
+			{\tiny\inputminted{yaml}{code/application.yml}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione Ollama + Gemma}
+        \begin{block}{File \texttt{application-docker-model-runner.yml}}
+			{\tiny\inputminted{yaml}{code/application-docker-model-runner.yml}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{10-spring-ai-gemma-ollama-docker-model-runner}}
+	\end{center}
+\end{frame}
