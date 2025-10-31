@@ -1,0 +1,54 @@
+\section{\faWrench\ Retrieval Augmented Generation\\{\small Parte 3 - Approccio RAG advisor}} % (fold)
+\label{sec:spring-ai-rag-part-3}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] \textit{Chatbot} Ollama-HR-Venis-ITA classico e Gemini-HR-Venis-ENG con \textit{advisor}
+        \onslide<2->\item[\alert{\faExclamationTriangle}] Approccio avanzato (informazione testuale estratta tramite \textit{advisor})
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alertedcircled{1}] Modifica \textit{file} di configurazione RAG
+            \onslide<4->\item[\alertedcircled{2}] Modifica implmentazione servizio
+            \onslide<7->\item[\alertedcircled{5}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Configurazione RAG}
+        \begin{block}{Configurazione Vector Store}
+			{\tiny\inputminted{java}{code/RAGConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \vspace*{-.7cm}
+    \framesubtitle{RAG}
+        \begin{block}{Implementazione servizio - I}
+			{\tiny\inputminted{java}{code/RAGServiceImpl.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG}
+        \begin{block}{Implementazione servizio - II}
+			{\tiny\inputminted{java}{code/RAGServiceImpl-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG}
+        \begin{block}{Implementazione servizio - III}
+			{\tiny\inputminted{java}{code/RAGServiceImpl-3.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{9-spring-ai-gemini-ollama-rag-advisor}}
+	\end{center}
+\end{frame}
