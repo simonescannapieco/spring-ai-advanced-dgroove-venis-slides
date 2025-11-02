@@ -1,0 +1,147 @@
+\section{\faWrench\ RAG Web Search} % (fold)
+\label{sec:spring-ai-rag-web-search}
+%
+\begin{frame}[t,fragile] \frametitle{Concetti avanzati}
+    \framesubtitle{RAG Web Search}
+    \vspace*{-.7cm}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Il \textit{vector store} \alert{non} è l'unico \textit{data source} dal quale Spring AI può attingere documenti
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \alert{\texttt{VectorStoreDocumentRetriever}} unica implementazione di \alert{\texttt{DocumentRetriever}} (Spring AI <= 1.0.3)
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Possibile utilizzare informazione dal web (RAG \textit{web search})
+            \onslide<4->\begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] Metodo efficace per mitigare la \textit{knowledge cut-off} di LLM 
+                \item[\alert{\faExclamationTriangle}] Utilizzo di connettori API appositi (es. Google Web Search API)
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    }
+    \begin{block}{Interfaccia per recupero documenti}
+		{\tiny\inputminted{java}{code/DocumentRetriever.java}}
+    \end{block}
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio RAG Ollama Web Search
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Creazione \textit{account} Tavily e API \textit{key}
+            \onslide<3->\item[\alertedcircled{2}] Modifica variabili di ambiente
+            \onslide<4->\item[\alertedcircled{3}] Creazione implementazione \textit{document retriever} tramite \textit{web search}
+            \onslide<5->\item[\alertedcircled{4}] Modifica configurazione RAG
+            \onslide<6->\item[\alertedcircled{5}] Modifica interfaccia e implementazione servizio
+            \onslide<7->\item[\alertedcircled{6}] Modifica proprietà applicativo
+            \onslide<8->\item[\alertedcircled{7}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Ambiente di sviluppo}
+\framesubtitle{Creazione account Tavily}
+	\vspace*{-.5cm}
+    {\footnotesize
+    \begin{itemize}
+        \only<1|handout:1>{\item[\alertedcircled{1}] Accedere al portale \url{https://tavily.com/} e cliccare il pulsante \texttt{Sign up}}
+        \only<2|handout:2>{\item[\alertedcircled{2}] Creare una nuova utenza}
+        \only<3|handout:3>{\item[\alertedcircled{3}] Accedere al portale e selezionare la API \textit{key} di \textit{default}} 
+    \end{itemize}
+    }
+    \vfill
+    \begin{minipage}[b]{\textwidth}
+		\centering
+        \only<1|handout:1>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/tavily-portal-sign-up.png}
+		    \end{figure}
+        }
+        \only<2|handout:2>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/tavily-create-account.png}
+		    \end{figure}
+        }
+        \only<3|handout:3>{
+		    \begin{figure}[ht]
+			    \includegraphics[width=\textwidth, frame]{img/tavily-dashboard-api-key.png}
+		    \end{figure}
+        }
+	\end{minipage}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Variabili di ambiente - Applicativo Spring}
+        \begin{block}{\textit{File} \texttt{launch.json}}
+			{\tiny\inputminted{json}{code/launch.json}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Variabili di ambiente - JUnit test}
+        \begin{block}{\textit{File} \texttt{settings.json}}
+			{\tiny\inputminted{json}{code/settings.json}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+        \begin{block}{\textit{Document retriever} via \textit{web search} - I}
+			{\tiny\inputminted{java}{code/WebSearchDocumentRetriever.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+        \vspace*{-.7cm}
+        \begin{block}{\textit{Document retriever} via \textit{web search} - II}
+			{\tiny\inputminted{java}{code/WebSearchDocumentRetriever-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+        \vspace*{-.7cm}
+        \begin{block}{\textit{Document retriever} via \textit{web search} - III}
+			{\tiny\inputminted{java}{code/WebSearchDocumentRetriever-3.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+        \begin{block}{Configurazione Vector Store}
+			{\tiny\inputminted{java}{code/RAGConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/RAGService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+    \vspace*{-.7cm}
+    \begin{block}{Implementazione servizio}
+		{\tiny\inputminted{java}{code/RAGServiceImpl.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{RAG web search}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{11-spring-ai-gemini-ollama-rag-web-search}}
+	\end{center}
+\end{frame}
