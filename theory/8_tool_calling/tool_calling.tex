@@ -1,3 +1,6 @@
+\section{Tool Calling} % (fold)
+\label{sec:tool_calling}
+%
 \begin{frame}[t] \frametitle{Tool calling}
 \framesubtitle{Descrizione}
 {\footnotesize
@@ -49,6 +52,9 @@
     \end{minipage}
 }
 \end{frame}
+%
+\section{Tool Calling\\\small{Method as tool}} % (fold)
+\label{sec:tool_calling_mat}
 %
 \begin{frame}[fragile,t] \frametitle{Tool calling}
 \framesubtitle{Componenti chiave in Spring AI}
@@ -127,5 +133,84 @@
     {\tiny\\\textit{\textcopyright Spring AI}}
 \end{figure}
 
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Tool calling}
+\framesubtitle{Limitazioni di method as tool}
+{\footnotesize
+    \begin{minipage}[t]{\textwidth}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] \alert{Restrizioni di tipo} per parametri e valori di ritorno
+            \onslide<2->\item[\alert{\faExclamationTriangle}] Tipi non supportati
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<3->\item[\alert{\faArrowCircleRight}] \textbf{Tipi Optional} - \texttt{Optional<T>} non è compatibile
+                \onslide<4->\item[\alert{\faArrowCircleRight}] \textbf{Costrutti asincroni} - \texttt{CompletableFuture}, \texttt{Future}
+                \onslide<5->\item[\alert{\faArrowCircleRight}] \textbf{Tipi reattivi} - \texttt{Flow}, \texttt{Mono}, \texttt{Flux}
+                \onslide<6->\item[\alert{\faArrowCircleRight}] \textbf{Tipi funzionali} - \texttt{Function}, \texttt{Supplier}, \texttt{Consumer}
+            \end{itemize}
+            \onslide<7->\item[\alert{\faExclamationTriangle}] I tipi funzionali sono supportati attraverso l'approccio \alert{function-based} dedicato (\texttt{@Bean})
+        \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\section{Tool Calling\\\small{Function as tool}} % (fold)
+\label{sec:tool_calling_fat}
+%
+\begin{frame}[fragile,t] \frametitle{Tool calling}
+\framesubtitle{Function as tool}
+{\scriptsize
+    \vspace*{-.7cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{Definizione di \textit{tool} come \texttt{@Bean}}
+		    {\tiny\inputminted{java}{code/WeatherTools.java}}
+        \end{block}
+        \vspace*{.3cm}
+        \only<1-5|handout:1>{
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] Alternative all'approccio con annotazioni di metodo (\texttt{@Tool})
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Il nome del \texttt{@Bean} diventa l'identificativo del \textit{tool}
+            \onslide<3->\item[\alert{\faArrowCircleRight}] \alert{\texttt{@Description}} fornisce la descrizione del \textit{tool}
+            \onslide<4->\begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faExclamationCircle}] Aiutare il modello a comprendere lo scopo del \textit{tool}
+            \end{itemize}
+            \onslide<5->\item[\alert{\faArrowCircleRight}] \textbf{Tipi funzionali supportati:} \texttt{Function<I,O>}, \texttt{Supplier<O>}, \texttt{Consumer<I>}, \texttt{BiFunction<I1,I2,O>}
+        \end{itemize}
+        }
+        \only<6|handout:2>{
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faExclamationTriangle}] \textbf{Limitazioni} (vincoli di risoluzione dei tipi a runtime):
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faTimes}] Tipi primitivi
+                \item[\alert{\faTimes}] \texttt{Optional}
+                \item[\alert{\faTimes}] Collezioni (\texttt{List}, \texttt{Map}, \texttt{Array}, \texttt{Set})
+                \item[\alert{\faTimes}] Tipi asincroni e reattivi
+            \end{itemize}
+        \end{itemize}
+        }
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Tool calling}
+\framesubtitle{Utilizzo di \textit{tool} definiti come \texttt{@Bean}}
+{\scriptsize
+    \vspace*{-.7cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{Aggiunta di \textit{tool} al \texttt{ChatClient}}
+		    {\tiny\inputminted{java}{code/ChatClientWithBeanTools.java}}
+        \end{block}
+        \vspace*{.3cm}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] Riferimento al \textit{tool} tramite \alert{nome del bean} con \texttt{toolNames()}
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Possibilità di definire \alert{\textit{tool} di default} condivisi tra più richieste con \texttt{defaultToolNames()}
+            \onslide<3->\begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faExclamationTriangle}] Attenzione alle \alert{implicazioni di sicurezza} con \textit{tool} di default
+            \end{itemize}
+            \onslide<4->\item[\alert{\faArrowCircleRight}] \textbf{Generazione automatica dello schema} degli input
+            \onslide<5->\item[\alert{\faArrowCircleRight}] \texttt{@ToolParam} permette personalizzazione per descrizioni e stato \textit{required} anche per tipi nested
+        \end{itemize}
+    \end{minipage}
+}
 \end{frame}
 %
