@@ -1,0 +1,78 @@
+\section{\faWrench\ Tool calling\\\small{Concetti base}} % (fold)
+\label{sec:spring-tool-calling-base}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio \textit{tool calling} per richiesta ora locale/per fuso orario
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Creazione \textit{tool} per supporto ora/locale/\textit{timezone}
+            \onslide<3->\item[\alertedcircled{2}] Configurazione \textit{client} Ollama e Gemini per utilizzo \textit{tool}
+            \onslide<4->\item[\alertedcircled{3}] Creazione interfaccia e implementazione servizio
+            \onslide<5->\item[\alertedcircled{4}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Metodi di estrazione ora/locale/\textit{timezone}}
+			{\tiny\inputminted{java}{code/TimeTools.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Ollama e Gemini per \textit{tool calling} - I}
+			{\tiny\inputminted{java}{code/ToolConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Ollama e Gemini per \textit{tool calling} - II}
+			{\tiny\inputminted{java}{code/ToolConfig-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/ToolService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    \begin{block}{Implementazione servizio - I}
+		{\tiny\inputminted{java}{code/ToolServiceImpl.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    \begin{block}{Implementazione servizio - II}
+		{\tiny\inputminted{java}{code/ToolServiceImpl-2.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{12-spring-ai-gemini-ollama-time-tools}}
+	\end{center}
+\end{frame}
