@@ -1,0 +1,339 @@
+\begin{frame}[t] \frametitle{Tool calling}
+\framesubtitle{Descrizione}
+{\footnotesize
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] Tecnica di mitigazione della \textit{knowledge cut-off}\ldots
+            \item[\alert{\faArrowCircleRight}] \ldots ma non solo
+            \onslide<2->\begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] Ricerca di informazioni non presenti nella sua base di conoscenza (es. ``Che tempo fa a Venezia?'')
+                \onslide<3->\item[\alert{\faExclamationTriangle}] Quindi, differenza con RAG \textit{web search}...?! 
+                \onslide<4->\item[\alert{\faArrowCircleRight}] Messa in atto di ciò che comprende
+                \begin{itemize}[leftmargin=10pt,align=right]
+                    \item[\alert{\faArrowCircleRight}] ``Prenota un biglietto''
+                    \item[\alert{\faArrowCircleRight}] ``Invia un'email''
+                    \item[\alert{\faArrowCircleRight}] ``Crea un nuovo \textit{ticket} di segnalazione guasto''
+                \end{itemize}    
+                \onslide<5->\item[\alert{\faArrowCircleRight}] Primo passaggio nella transizione da LLM a \alert{ALM} (Action Language Model)
+            \end{itemize}
+        \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Tool calling}
+\framesubtitle{Differenze con RAG}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        {\footnotesize
+            \begin{table}
+                \renewcommand{\arraystretch}{1.3}
+                \centering
+                \begin{tabularx}{\textwidth}{Xp{5.5cm}}
+                    \toprule
+                    \textbf{Tool Calling} & \textbf{RAG}\\
+                    \midrule
+                    Chiamare un idraulico per riparare una perdita & Leggere un manuale fai-da-te per risolverla da solo\\
+                    \midrule
+                    ``In base a quello che mi hai chiesto, ecco come far agire il sistema con i mezzi a disposizione'' & ``In base a quello che mi hai chiesto e avedno letto alcuni documenti, ti spiego''\\
+                    \midrule
+                    Esegue azioni dal vivo o recupera dati dal vivo & Si concentra sulla generazione delle risposte utilizzando contenuti recuperati\\
+                    \midrule                    
+                    Richiede all'\textit{app client} di eseguire il \etxtit{tool} & Recupera solo documenti e continua a generare la risposta\\
+                    \bottomrule
+                \end{tabularx}
+            \end{table}
+        }
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Tool calling}
+\framesubtitle{Componenti chiave in Spring AI}
+{\scriptsize
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{Classe di definizione dei \textit{tool}}
+		    {\tiny\inputminted{java}{code/TimeTools.java}}
+        \end{block}
+        Due metodi: Uno usa la locale corrente dell'utente e l'altro accetta una stringa di fuso orario (come ``Asia/Kolkata''). Pensa a questi come metodi di utilità che l'AI può chiamare.
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Facciamo Chiamare un Tool alla nostra AI -- Con Spring AI!}
+\framesubtitle{Componenti chiave in Spring AI}
+{\scriptsize
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        \textbf{2. Il ChatClient Consapevole dei Tool -- ToolsChatClientConfig}
+        \vspace*{.2cm}
+
+\begin{codeblock}{java}
+chatClientBuilder
+  .defaultTools(timeTools)
+\end{codeblock}
+
+        \vspace*{.3cm}
+        Stiamo iniettando il tool nel ChatClient così il modello ne è a conoscenza
+
+        \vspace*{.5cm}
+        \textbf{3. Il Controller -- ToolsCallingController}
+        \vspace*{.2cm}
+
+\begin{codeblock}{java}
+@GetMapping("/local-time")
+public ResponseEntity<String> localTime (...)
+\end{codeblock}
+
+        \vspace*{.3cm}
+        Usa chatClient.prompt() per interagire con l'AI
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Come i Tool vengono chiamati dall'LLM?}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        Può sembrare che Spring AI esponga il tuo tool come endpoint per OpenAI da chiamare, ma non è quello che succede. Invece, avviene una conversazione dietro le quinte tra la tua app e il modello ogni volta che un tool è coinvolto.
+
+        \vspace*{.5cm}
+        %\begin{figure}
+        %    \centering
+        %    \includegraphics[width=.65\textwidth]{img/tool_calling_sequence.png}
+        %\end{figure}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Come i Tool vengono chiamati dall'LLM?}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        %\begin{figure}
+        %    \centering
+        %    \includegraphics[width=.85\textwidth]{img/tool_calling_architecture.png}
+        %\end{figure}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Tool Calling in AI}
+\framesubtitle{Chi Esegue Effettivamente la Logica dei Tools?}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{.55\textwidth}
+        \begin{itemize}[leftmargin=10pt]
+            \item Gli LLM non ``eseguono'' realmente i tools. Sono come un project manager—delegano.
+            \item L'applicazione client riceve la richiesta, chiama il tool/API, e invia il risultato al modello.
+        \end{itemize}
+
+        \vspace*{.5cm}
+        \textbf{Come Aiuta Spring AI:}
+
+        \begin{itemize}[leftmargin=10pt]
+            \item Puoi definire tools come semplici bean Java o metodi annotati.
+            \item Spring AI:
+            \begin{itemize}[leftmargin=10pt]
+                \item[\alert{\faArrowCircleRight}] Rileva le richieste di chiamata tool dal modello
+                \item[\alert{\faArrowCircleRight}] Mappa automaticamente gli argomenti di input
+                \item[\alert{\faArrowCircleRight}] Esegue il metodo tool giusto
+                \item[\alert{\faArrowCircleRight}] Invia i risultati al modello come un assistente esperto di tecnologia!
+            \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{.40\textwidth}
+        %\begin{figure}
+        %    \centering
+        %    \includegraphics[width=.8\textwidth]{img/ai_assistant.png}
+        %\end{figure}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Tool Calling in AI}
+\framesubtitle{Analogia Rapida da Ricordare}
+{\large
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        \centering
+        \vspace*{1cm}
+        \emph{``Se il RAG è la tua AI che legge un libro per rispondere a una domanda, il Tool Calling è la tua AI che chiama un amico per far fare le cose!''}
+
+        \vspace*{1cm}
+        %\begin{figure}
+        %    \centering
+        %    \includegraphics[width=.3\textwidth]{img/ai_assistant.png}
+        %\end{figure}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Tool Context -- Condivisione di Informazioni Extra}
+{\scriptsize
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        \textbf{ToolContext} è un meccanismo in Spring AI che ti permette di iniettare dati extra—non parte del prompt principale o degli argomenti del tool—nel flusso di esecuzione del tool. È utile per scenari in cui un tool ha bisogno di accedere a metadati specifici dell'utente/sessione come username, userId, o organizationId.
+
+        \vspace*{.5cm}
+        \textbf{1. Passare Dati Contestuali}
+
+        Questo contesto non è direttamente visibile al modello AI. È destinato puramente alla logica backend durante l'invocazione del tool.
+
+        \vspace*{.3cm}
+\begin{codeblock}{java}
+String answer = chatClient.prompt()
+  .advisors(a -> a.param(CONVERSATION_ID, username))
+  .user(message)
+  .tools(helpDeskTools)
+  .toolContext(Map.of("username", username))
+  .call().content();
+\end{codeblock}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Tool Context -- Condivisione di Informazioni Extra}
+{\scriptsize
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        \textbf{2. Accedere ai Dati Contestuali nel Tool}
+
+        Il ToolContext viene iniettato automaticamente quando il tool viene chiamato. toolContext.getContext().get(``username''): Recupera il valore di contesto (username) che è stato passato in precedenza.
+
+        \vspace*{.3cm}
+\begin{codeblock}{java}
+@Tool(description = "Recupera lo stato dei ticket aperti basato su un dato username")
+List<HelpDeskTicket> getTicketStatus(ToolContext toolContext) {
+    String username = (String) toolContext.getContext().get("username");
+    return service.getTicketsByUsername(username);
+}
+\end{codeblock}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Esecuzione Tool \& Conversione Risultati}
+\framesubtitle{Esecuzione Tool -- Incontra il Manager}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{.55\textwidth}
+        L'esecuzione del tool implica invocare un tool con gli argomenti di input dati e restituire il risultato. Questo processo è gestito dall'interfaccia \alert{ToolCallingManager}, che supervisiona l'intero ciclo di vita dell'esecuzione.
+
+        \vspace*{.5cm}
+        Esso:
+        \begin{itemize}[leftmargin=10pt]
+            \item Invoca il tool
+            \item Passa gli argomenti
+            \item Coordina tutto
+        \end{itemize}
+
+        \vspace*{.5cm}
+        \alert{DefaultToolCallingManager} è l'implementazione auto-configurata dell'interfaccia ToolCallingManager. Per personalizzare il comportamento di esecuzione del tool, puoi definire e registrare il tuo bean ToolCallingManager.
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{.40\textwidth}
+        %\begin{figure}
+        %    \centering
+        %    \includegraphics[width=\textwidth]{img/neural_network.png}
+        %\end{figure}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Esecuzione Tool \& Conversione Risultati}
+\framesubtitle{Conversione Risultati -- Far Parlare l'Output in Modo Umano}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        Il risultato della chiamata al tool viene convertito in una String usando l'interfaccia \alert{ToolCallResultConverter} e inviato al modello AI. Per impostazione predefinita, è serializzato in JSON con Jackson tramite \alert{DefaultToolCallResultConverter}, ma puoi personalizzarlo fornendo la tua implementazione.
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Return Direct -- Salta la Risposta del Modello}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        Per impostazione predefinita, il risultato del Tool viene inviato all'LLM così può ragionare e continuare a chattare.
+
+        \vspace*{.3cm}
+        Ma a volte, vuoi:
+        \begin{itemize}[leftmargin=10pt]
+            \item[\alert{\faArrowCircleRight}] Restituire il risultato del tool direttamente all'utente
+            \item[\alert{\faArrowCircleRight}] Saltare l'elaborazione extra da parte del modello
+        \end{itemize}
+
+        \vspace*{.3cm}
+        Il flag \alert{returnDirect} dell'annotazione @Tools dice a Spring AI di non inviare l'output del tool al modello AI per ulteriore elaborazione. Invece, restituisce immediatamente il risultato del tool direttamente come risposta finale all'utente (o al chiamante).
+
+        \vspace*{.3cm}
+\begin{codeblock}{java}
+@Tool(description = "Crea il Ticket di Supporto", returnDirect = true)
+String createTicket( @ToolParam(required = true, description = "Dettagli per creare un Ticket di Supporto")
+    TicketRequest ticketRequest, ToolContext toolContext) {
+    String username = (String) toolContext.getContext().get("username");
+    HelpDeskTicket savedTicket = service.createTicket(ticketRequest, username);
+    return "Ticket #" + savedTicket.getId() + " creato con successo per l'utente " + savedTicket.getUsername();
+}
+\end{codeblock}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Return Direct -- Salta la Risposta del Modello}
+\framesubtitle{Quando Usare returnDirect = true}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{\textwidth}
+        Usalo quando:
+
+        \vspace*{.3cm}
+        \begin{itemize}[leftmargin=10pt]
+            \item Il tool genera un messaggio finale leggibile dall'uomo.
+            \item Non vuoi che il modello alteri, riassuma o continui il ragionamento dopo l'esecuzione del tool.
+            \item Vuoi ridurre la latenza saltando il passaggio di post-elaborazione.
+        \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Gestione Errori con Grazia -- ToolExecutionException}
+{\small
+\onslide<1->
+    \begin{minipage}[t]{.55\textwidth}
+        Se il tuo tool genera un errore, Spring lo avvolge in una \alert{ToolExecutionException}
+
+        \vspace*{.3cm}
+        Per impostazione predefinita, il messaggio viene inviato al modello. Invece possiamo generare l'eccezione all'app client,
+
+        \vspace*{.3cm}
+\begin{codeblock}{java}
+@Bean
+ToolExecutionExceptionProcessor processor() {
+  return new DefaultToolExecutionExceptionProcessor(true);
+}
+\end{codeblock}
+
+        \vspace*{.3cm}
+        Se stai usando Spring AI Boot Starters, DefaultToolExecutionExceptionProcessor è il gestore predefinito per gli errori di esecuzione del tool.
+
+        \vspace*{.3cm}
+        Per impostazione predefinita, invia messaggi di errore al modello.
+
+        \vspace*{.3cm}
+        Puoi impostare il flag alwaysThrow nel suo costruttore su true per generare eccezioni invece di restituire messaggi di errore.
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{.40\textwidth}
+        %\begin{figure}
+        %    \centering
+        %    \includegraphics[width=\textwidth]{img/robot_error.png}
+        %\end{figure}
+    \end{minipage}
+}
+\end{frame}
+%
