@@ -10,7 +10,7 @@
             \onslide<1->\item[\alert{\faArrowCircleRight}] \alert{\textit{Simple prompting}}: utente costruisce il contesto manualmente
             \begin{itemize}[leftmargin=10pt,align=right]
                 \onslide<2->\item[\alert{\faExclamationTriangle}] LLM genera una risposta in base alla conoscenza su cui è stato addestrato (\alert{\textit{knowledge cut-off}})
-                \onslide<3->\item[\alert{\faExclamationTriangle}] Impensabile pre-addestrare LLM su quanlunque sotto-dominio specifico
+                \onslide<3->\item[\alert{\faExclamationTriangle}] Impensabile pre-addestrare LLM su qualunque sotto-dominio specifico
                 \onslide<4->\item[\alert{\faExclamationTriangle}] Quando informazione contestuale non è sufficiente, LLM tende a generare risposte non veritiere (\alert{\textit{hallucination}})
             \end{itemize}
             \onslide<5->\item[\alert{\faArrowCircleRight}] \alert{\textit{Prompt stuffing}}: contesto utente arricchito dinamicamente (es. \textit{chat memory}) 
@@ -133,7 +133,7 @@
                 \item[\alert{\faArrowCircleRight}] Neo4j
                 \item[\alert{\faArrowCircleRight}] \ldots
             \end{itemize}
-            \onslide<2-> \textit{Data source} SQL/noSQL con interazione \textit{vector data storage}
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \textit{Data source} SQL/noSQL con interazione \textit{vector data storage}
             \begin{itemize}[leftmargin=10pt,align=right]
                 \item[\alert{\faArrowCircleRight}] MongoDB
                 \item[\alert{\faArrowCircleRight}] PostgreSQL + pgvector
@@ -148,13 +148,13 @@
 %
 \begin{frame}[t] \frametitle{\emph{Workflow} del processo RAG}
 {\scriptsize
-\only<1>{
+\only<1|handout:1>{
     \framesubtitle{Approccio non generativo}
     \begin{center}
         \includegraphics[width=.75\textwidth]{img/RAG-no-LLM-scaled.png}
     \end{center}
 }
-\only<2->{
+\only<2|handout:2>{
     \framesubtitle{Approccio generativo}
     \begin{center}
         \includegraphics[width=.75\textwidth]{img/RAG-LLM-scaled.png}
@@ -166,37 +166,37 @@
 \begin{frame}[t] \frametitle{RAG non generativo: esempio}
 {\scriptsize
 \framesubtitle{Ricerca semantica di film e serie}
-\only<1>{
+\only<1|handout:1>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-0-scaled.png}
     \end{center}
 }
-    \only<2>{
+    \only<2|handout:2>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-1-scaled.png}
     \end{center}
 }
-    \only<3>{
+    \only<3|handout:3>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-2-scaled.png}
     \end{center}
 }
-    \only<4>{
+    \only<4|handout:4>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-3-scaled.png}
     \end{center}
 }
-    \only<5>{
+    \only<5|handout:5>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-4-scaled.png}
     \end{center}
 }
-    \only<6>{
+    \only<6|handout:6>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-5-scaled.png}
     \end{center}
 }
-    \only<7>{
+    \only<7|handout:7>{
     \begin{center}
         \includegraphics[width=\textwidth]{img/RAG-NO-LLM-NETFLIX-6-scaled.png}
     \end{center}
