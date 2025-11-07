@@ -2,14 +2,15 @@
 public class TimeTools {
 
     @Tool(name="getCurrentLocalTime",
-          description="Ottieni l'ora corrente nel fuso orario dell'utente")
+          description="Ottieni l'ora corrente nel fuso orario dell'utente.")
     String getCurrentLocalTime() {
         ...
     }
 
     @Tool(name="getCurrentTime",
-          description="Ottieni l'ora corrente nel fuso orario specificato.")
-    public String getCurrentTime(@ToolParam(description = "Valore che rappresenta il fuso orario") String timeZone) {
+          description="Ottieni l'ora corrente nel fuso orario specificato.",
+          returnDirect=true)
+    public String getCurrentTime(@ToolParam(description = "Valore che rappresenta il fuso orario.") String timeZone) {
             ...
         }
 }

@@ -7,18 +7,23 @@
 \onslide<1->
     \begin{minipage}[t]{\textwidth}
         \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] \textit{Design pattern} in AI (chiamata anche \textit{function calling})
             \item[\alert{\faArrowCircleRight}] Tecnica di mitigazione della \textit{knowledge cut-off}\ldots
             \item[\alert{\faArrowCircleRight}] \ldots ma non solo
             \onslide<2->\begin{itemize}[leftmargin=10pt,align=right]
-                \item[\alert{\faArrowCircleRight}] Ricerca di informazioni non presenti nella sua base di conoscenza (es. ``Che tempo fa a Venezia?'')
-                \onslide<3->\item[\alert{\faExclamationTriangle}] Quindi, differenza con RAG \textit{web search}...?! 
-                \onslide<4->\item[\alert{\faArrowCircleRight}] Messa in atto di ciò che comprende
+                \item[\alert{\faArrowCircleRight}] Ricerca di informazioni non presenti nella sua base di conoscenza
                 \begin{itemize}[leftmargin=10pt,align=right]
-                    \item[\alert{\faArrowCircleRight}] ``Prenota un biglietto''
-                    \item[\alert{\faArrowCircleRight}] ``Invia un'email''
-                    \item[\alert{\faArrowCircleRight}] ``Crea un nuovo \textit{ticket} di segnalazione guasto''
+                    \item[\alert{\faArrowCircleRight}] ``Che tempo fa a Venezia?'' $\leadsto$ ``Soleggiato con temperature massime sui 20°C''
+                    \onslide<3->\item[\alert{\faExclamationTriangle}] Quindi, differenza con RAG \textit{web search}...?!
+                \end{itemize}
+                \onslide<4->\item[\alert{\faArrowCircleRight}] Logica più semplice e mirata per recupero delle informazioni 
+                \onslide<5->\item[\alert{\faArrowCircleRight}] Messa in atto di ciò che comprende
+                \begin{itemize}[leftmargin=10pt,align=right]
+                    \item[\alert{\faArrowCircleRight}] ``Prenota un biglietto'' $\leadsto$ \alert{\faTicket}
+                    \item[\alert{\faArrowCircleRight}] ``Invia un'\textit{email}'' $\leadsto$ \alert{\faEnvelope}
+                    \item[\alert{\faArrowCircleRight}] ``Fissa un appuntamento per martedì prossimo alle 18 in ufficio'' $\leadsto$ \alert{\faCalendar}
                 \end{itemize}    
-                \onslide<5->\item[\alert{\faArrowCircleRight}] Primo passaggio nella transizione da LLM a \alert{ALM} (Action Language Model)
+                \onslide<6->\item[\alert{\faArrowCircleRight}] Primo passaggio nella transizione da LLM a \alert{ALM} (Action Language Model)
             \end{itemize}
         \end{itemize}
     \end{minipage}
@@ -34,17 +39,17 @@
             \begin{table}
                 \renewcommand{\arraystretch}{1.3}
                 \centering
-                \begin{tabularx}{\textwidth}{Xp{5.5cm}}
+                \begin{tabularx}{\textwidth}{p{5.5cm}p{5.5cm}}
                     \toprule
-                    \textbf{Tool Calling} & \textbf{RAG}\\
+                    \textbf{RAG} & \textbf{\textit{Tool calling}}\\
                     \midrule
-                    Chiamare un idraulico per riparare una perdita & Leggere un manuale fai-da-te per risolverla da solo\\
+                     Leggere un manuale fai-da-te per risolverla da solo & Chiamare un idraulico per riparare una perdita\\
                     \midrule
-                    ``In base a quello che mi hai chiesto, ecco come far agire il sistema con i mezzi a disposizione'' & ``In base a quello che mi hai chiesto e avendo letto alcuni documenti, ti spiego''\\
+                    ``In base a quello che mi hai chiesto e avendo letto alcuni documenti, ti spiego'' & ``In base a quello che mi hai chiesto, ecco come far agire il sistema con i mezzi a disposizione''\\
                     \midrule
-                    Esegue azioni dal vivo o recupera dati dal vivo & Si concentra sulla generazione delle risposte utilizzando contenuti recuperati\\
+                    Si concentra sulla generazione delle risposte utilizzando contenuti recuperati & Esegue azioni dal vivo o recupera dati dal vivo\\
                     \midrule                    
-                    Richiede all'\textit{app client} di eseguire il \textit{tool} & Recupera solo documenti e continua a generare la risposta\\
+                    Recupera solo documenti e continua a generare la risposta & Richiede all'\textit{app client} di eseguire il \textit{tool}\\
                     \bottomrule
                 \end{tabularx}
             \end{table}
@@ -53,27 +58,85 @@
 }
 \end{frame}
 %
+\begin{frame}[fragile,t] \frametitle{Tool calling}
+\framesubtitle{Workflow in Spring AI - Default}
+\vspace*{-.7cm}
+{\footnotesize
+    \begin{itemize}
+        \only<1|handout:1>{\item[\alertedcircled{1}] L'utente invia la richiesta al LLM attraverso \texttt{ChatClient}/\texttt{ChatModel} riferendo al LLM i \textit{tool} a sua disposizione}
+        \only<2|handout:2>{\item[\alertedcircled{2}] Se il LLM decide di chiamare un \textit{tool}, invia una \textit{response} con nome del \textit{tool} e parametri istanziati, seguendo la schema definito per il \textit{tool}}
+        \only<3|handout:3>{\item[\alertedcircled{3}] L'applicativo inoltra all'effettiva implementazione del \textit{tool} nel \textit{container} Spring la richiesta con istanziazione dei parametri suggeriti dal LLM}
+        \only<4|handout:4>{\item[\alertedcircled{4}] Il \textit{tool} esegue la sua logica di implementazione con i parametri restituiti dal LLM e restituisce il risultato al \textit{container} Spring}
+        \only<5|handout:5>{\item[\alertedcircled{5}] Il sistema invoca nuovamente il LLM con la richiesta utente precedente ma ulteriormente contestualizzata dall'\textit{output} del \textit{tool}}
+        \only<6|handout:6>{\item[\alertedcircled{6}] Il LLM restituisce la risposta finale al \texttt{ChatClient}/\texttt{ChatModel} sfruttando generazione di testo e contesto}
+    \end{itemize}
+    }
+\vfill
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{img/tool-calling.png}
+    {\tiny\\\textit{\textcopyright Spring AI}}
+\end{figure}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{Tool calling}
+\framesubtitle{Workflow in Spring AI - Direct}
+\vspace*{-.7cm}
+{\footnotesize
+    \begin{itemize}
+        \only<1|handout:1>{\item[\alertedcircled{5}] Il sistema restituisce il risultato del \textit{tool} direttamente a \texttt{ChatClient}/\texttt{ChatModel} senza interrogare nuovamente il LLM}
+    \end{itemize}
+}
+\vfill
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{img/return-direct.png}
+    {\tiny\\\textit{\textcopyright Spring AI}}
+\end{figure}
+\end{frame}
+%
+\begin{frame}[t] \frametitle{Tool calling}
+\framesubtitle{Metodologie e paradigmi}
+{\footnotesize
+    \begin{minipage}[t]{\textwidth}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] Metodologie
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<2->\item[\alert{\faArrowCircleRight}] Dichiarativa 
+                \onslide<3->\item[\alert{\faArrowCircleRight}] Programmatica
+            \end{itemize}
+            \onslide<1->\item[\alert{\faArrowCircleRight}] Paradigmi
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<4->\item[\alert{\faArrowCircleRight}] \textit{\alert{M}ethod \alert{A}s \alert{T}ool} (\alert{MAT}) 
+                \onslide<5->\item[\alert{\faArrowCircleRight}] \textit{\alert{F}unction \alert{A}s \alert{T}ool} (\alert{FAT})
+            \end{itemize}
+        \end{itemize}      
+    \end{minipage}
+}
+\end{frame}
+%
 \section{Tool Calling\\\small{Method as tool}} % (fold)
 \label{sec:tool_calling_mat}
 %
-\begin{frame}[fragile,t] \frametitle{Tool calling}
-\framesubtitle{Componenti chiave in Spring AI}
+\begin{frame}[fragile,t] \frametitle{MAT}
+\framesubtitle{Spring AI - Approccio dichiarativo}
 {\scriptsize
-    \vspace*{-.7cm}
+    \vspace*{-.8cm}
     \begin{minipage}[t]{\textwidth}
         \begin{block}{Classe di definizione dei \textit{tool}}
 		    {\tiny\inputminted{java}{code/TimeTools.java}}
         \end{block}
         \only<2-4|handout:1>{
-        \vspace*{.3cm}
+        \vspace*{.1cm}
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<2->\item[\alert{\faArrowCircleRight}] Solitamente istanziati come \alert{\texttt{@Component}}
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Istanziati come \alert{\texttt{@Component}}
             \onslide<3->\item[\alert{\faArrowCircleRight}] Ogni metodo a disposizione del LLM come \textit{tool} deve essere annotato come \alert{\texttt{@Tool}}
             \onslide<4->\begin{itemize}[leftmargin=10pt,align=right]
                 \item[\alert{\faArrowCircleRight}] se \texttt{name} non specificato, Spring AI popola il parametro con il nome del metodo
-                \item[\alert{\faExclamationTriangle}] \texttt{name} come \alert{identificativo univoco} per Spring AI!
+                \item[\alert{\faExclamationTriangle}] \texttt{name} come \alert{identificativo univoco} per Spring AI
                 \item[\alert{\faArrowCircleRight}] \texttt{description} fornisce il \alert{contesto} al LLM per determinare se utilizzare il \textit{tool} in base alla richiesta utente!
                 \item[\alert{\faArrowCircleRight}] \alert{\texttt{@ToolParam}} fornisce ulteriore contesto al LLM per iniettare parametri al metodo
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{returnDirect}} per sovrascrivere il comportamento di \textit{default} se necessario 
             \end{itemize}
         \end{itemize}
         }
@@ -97,46 +160,44 @@
 }
 \end{frame}
 %
-\begin{frame}[fragile,t] \frametitle{Tool calling}
-\framesubtitle{Componenti chiave in Spring AI}
+\begin{frame}[fragile,t] \frametitle{MAT}
+\framesubtitle{Spring AI - Approccio dichiarativo}
 {\footnotesize
     \vspace*{-.7cm}
     \begin{minipage}[t]{\textwidth}
-        \begin{block}{\texttt{ChatClient} potenziato con \textit{tool}}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio statico}
 		    {\tiny\inputminted{java}{code/ToolConfig.java}}
         \end{block}
-        \vspace*{.3cm}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio dinamico}
+		    {\tiny\inputminted{java}{code/TimeToolsServiceImpl.java}}
+        \end{block}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{MAT}
+\framesubtitle{Spring AI - Approccio programmatico}
+{\scriptsize
+    \vspace*{-.8cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{Classe di definizione dei \textit{tool}}
+		    {\tiny\inputminted{java}{code/TimeTools-2.java}}
+        \end{block}
+        \begin{block}{Utilizzo approccio \textit{method-tool callback}}
+		    {\tiny\inputminted{java}{code/MethodToolCallback.java}}
+        \end{block}        
+        \vspace*{.1cm}
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<1->\item[\alert{\faArrowCircleRight}] Disponibilità dei \textit{tool} al \texttt{ChatClient} attraverso \textit{injection}
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Il sistema usa \textit{reflection} per isolare il metodo
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Costruito un \alert{\texttt{ToolCallback}} che definisce la logica di utilizzo del \textit{tool}
+            \onslide<4->\item[\alert{\faExclamationTriangle}] Definizione \alert{\texttt{ToolCallback}} \textit{under-the-hood} anche con approccio dichiarativo
         \end{itemize}
     \end{minipage}
 }
 \end{frame}
 %
-\begin{frame}[fragile,t] \frametitle{Tool calling}
-\framesubtitle{Workflow}
-\vspace*{-.7cm}
-{\footnotesize
-    \begin{itemize}
-        \only<1|handout:1>{\item[\alertedcircled{1}] L'utente invia la richiesta al LLM attraverso \texttt{ChatClient}/\texttt{ChatModel} riferendo al LLM i \textit{tool} a sua disposizione}
-        \only<2|handout:2>{\item[\alertedcircled{2}] Se il LLM decide di chiamare un \textit{tool}, invia una \textit{response} con nome del \textit{tool} e parametri istanziati, seguendo la schema definito da \texttt{@Tool} e \texttt{@ToolParam}}
-        \only<3|handout:3>{\item[\alertedcircled{3}] L'applicativo interroga il \texttt{@Bean} corrispondente alla classe che contiene il metodo con i parametri istanziati suggeriti dal LLM}
-        \only<4|handout:4>{\item[\alertedcircled{4}] Il \texttt{@Bean} invoca il metodo con i parametri restituiti dal LLM e restituisce il risultato al \textit{container} Spring}
-        \only<5|handout:5>{\item[\alertedcircled{5}] Il sistema invoca nuovamente il LLM con la richiesta utente precedente ma ulteriormente contestualizzata dall'\textit{output} del \textit{tool}}
-        \only<6|handout:6>{\item[\alertedcircled{6}] Il LLM restituisce la risposta finale al \texttt{ChatClient}/\texttt{ChatModel} sfruttando generazione di testo e contesto}
-    \end{itemize}
-    }
-\vfill
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{img/tool-calling.png}
-    {\tiny\\\textit{\textcopyright Spring AI}}
-\end{figure}
-
-\end{frame}
-%
-\begin{frame}[fragile,t] \frametitle{Tool calling}
-\framesubtitle{Limitazioni di method as tool}
+\begin{frame}[fragile,t] \frametitle{MAT}
+\framesubtitle{Vincoli Spring AI}
 {\footnotesize
     \begin{minipage}[t]{\textwidth}
         \begin{itemize}[leftmargin=10pt,align=right]
