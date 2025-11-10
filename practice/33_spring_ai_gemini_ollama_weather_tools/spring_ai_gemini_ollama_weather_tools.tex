@@ -1,0 +1,80 @@
+\section{\faWrench\ Tool calling\\\small{Function as Tool}} % (fold)
+\label{sec:spring-tool-calling-fat}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio FAT programmatico per richiesta temperatura (\textit{mock})
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Definizione modelli ed enumeratori per \texttt{WeatherRequest}, \texttt{TemperatureResponse} e \texttt{Unit}
+            \onslide<3->\item[\alertedcircled{1}] Creazione \textit{tool} per richiesta temperatura
+            \onslide<4->\item[\alertedcircled{2}] Configurazione \textit{client} Ollama e Gemini per utilizzo \textit{tool}
+            \onslide<5->\item[\alertedcircled{3}] Creazione interfaccia e implementazione servizio
+            \onslide<6->\item[\alertedcircled{4}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Enumeratore per unità di temperatura}
+			{\tiny\inputminted{java}{code/Unit.java}}
+    	\end{block}
+        \begin{block}{Modello per inoltro dati per tempo atmosferico}
+			{\tiny\inputminted{java}{code/WeatherRequest.java}}
+    	\end{block}
+        \begin{block}{Modello per risposta da tempo atmosferico}
+			{\tiny\inputminted{java}{code/TemperatureResponse.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Funzione di richiesta temperatura}
+			{\tiny\inputminted{java}{code/TemperatureService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Ollama e Gemini per \textit{tool calling} - I}
+			{\tiny\inputminted{java}{code/WeatherToolsConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+        \vspace*{-.7cm}
+        \begin{block}{Configurazione Ollama e Gemini per \textit{tool calling} - II}
+			{\tiny\inputminted{java}{code/WeatherToolsConfig-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST - I}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST - II}
+			{\tiny\inputminted{java}{code/QuestionController-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{13-spring-ai-gemini-ollama-weather-tools}}
+	\end{center}
+\end{frame}
