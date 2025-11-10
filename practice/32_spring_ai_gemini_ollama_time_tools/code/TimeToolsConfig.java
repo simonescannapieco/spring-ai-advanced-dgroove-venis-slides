@@ -3,7 +3,7 @@ package it.venis.ai.spring.demo.config;
 ...
 
 @Configuration
-public class ToolConfig {
+public class TimeToolsConfig {
     
     @Bean
     public ChatClient geminiToolChatClient(OpenAiChatModel geminiChatModel, TimeTools timeTools) {
@@ -25,6 +25,6 @@ public class ToolConfig {
                         """)
                 .build();
 
-    }  
+    }
 
     ...

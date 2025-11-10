@@ -1,11 +1,11 @@
-\section{\faWrench\ Tool calling\\\small{Concetti base}} % (fold)
-\label{sec:spring-tool-calling-base}
+\section{\faWrench\ Tool calling\\\small{Method as Tool}} % (fold)
+\label{sec:spring-tool-calling-mat}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Applicazione e passaggi}
     {\small
     \begin{itemize}[leftmargin=10pt,align=right]
-        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio \textit{tool calling} per richiesta ora locale/per fuso orario
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio MAT dichiarativo per richiesta ora locale/per fuso orario
         \begin{itemize}[leftmargin=10pt,align=right]
             \onslide<2->\item[\alertedcircled{1}] Creazione \textit{tool} per supporto ora/locale/\textit{timezone}
             \onslide<3->\item[\alertedcircled{2}] Configurazione \textit{client} Ollama e Gemini per utilizzo \textit{tool}
@@ -28,7 +28,7 @@
     \framesubtitle{Tool calling}
         \vspace*{-.7cm}
         \begin{block}{Configurazione Ollama e Gemini per \textit{tool calling} - I}
-			{\tiny\inputminted{java}{code/ToolConfig.java}}
+			{\tiny\inputminted{java}{code/TimeToolsConfig.java}}
     	\end{block}
 \end{frame}
 %
@@ -36,28 +36,28 @@
     \framesubtitle{Tool calling}
         \vspace*{-.7cm}
         \begin{block}{Configurazione Ollama e Gemini per \textit{tool calling} - II}
-			{\tiny\inputminted{java}{code/ToolConfig-2.java}}
+			{\tiny\inputminted{java}{code/TimeToolsConfig-2.java}}
     	\end{block}
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Tool calling}
         \begin{block}{Interfaccia servizio}
-			{\tiny\inputminted{java}{code/ToolService.java}}
+			{\tiny\inputminted{java}{code/TimeToolsService.java}}
     	\end{block}
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Tool calling}
     \begin{block}{Implementazione servizio - I}
-		{\tiny\inputminted{java}{code/ToolServiceImpl.java}}
+		{\tiny\inputminted{java}{code/TimeToolsServiceImpl.java}}
     \end{block}
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Tool calling}
     \begin{block}{Implementazione servizio - II}
-		{\tiny\inputminted{java}{code/ToolServiceImpl-2.java}}
+		{\tiny\inputminted{java}{code/TimeToolsServiceImpl-2.java}}
     \end{block}
 \end{frame}
 %
