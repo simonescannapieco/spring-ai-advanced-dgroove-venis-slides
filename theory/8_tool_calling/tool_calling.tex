@@ -39,7 +39,7 @@
             \begin{table}
                 \renewcommand{\arraystretch}{1.3}
                 \centering
-                \begin{tabularx}{\textwidth}{p{5.5cm}p{5.5cm}}
+                \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
                     \toprule
                     \textbf{RAG} & \textbf{\textit{Tool calling}}\\
                     \midrule
@@ -166,7 +166,7 @@
     \vspace*{-.7cm}
     \begin{minipage}[t]{\textwidth}
         \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio statico}
-		    {\tiny\inputminted{java}{code/ToolConfig.java}}
+		    {\tiny\inputminted{java}{code/TimeToolsConfig.java}}
         \end{block}
         \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio dinamico}
 		    {\tiny\inputminted{java}{code/TimeToolsServiceImpl.java}}
@@ -183,15 +183,47 @@
         \begin{block}{Classe di definizione dei \textit{tool}}
 		    {\tiny\inputminted{java}{code/TimeTools-2.java}}
         \end{block}
+        \vspace*{.3cm}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] \alert{\texttt{@ToolParam}} permesso in approccio sia dichiarativo che programmatico
+        \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{MAT}
+\framesubtitle{Spring AI - Approccio programmatico}
+{\scriptsize
+    \vspace*{-.8cm}
+    \begin{minipage}[t]{\textwidth}
         \begin{block}{Utilizzo approccio \textit{method-tool callback}}
 		    {\tiny\inputminted{java}{code/MethodToolCallback.java}}
         \end{block}        
         \vspace*{.1cm}
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<2->\item[\alert{\faArrowCircleRight}] Il sistema usa \textit{reflection} per isolare il metodo
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Il sistema usa \textit{reflection} per linkare il metodo 
             \onslide<3->\item[\alert{\faArrowCircleRight}] Costruito un \alert{\texttt{ToolCallback}} che definisce la logica di utilizzo del \textit{tool}
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{ToolDefinitions.Builder}} permette di definire nome, descrizione e schema del \textit{tool}
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{ToolMetadata.Builder}} responsabile della definizione strategia \textit{default vs direct}
+            \end{itemize}  
             \onslide<4->\item[\alert{\faExclamationTriangle}] Definizione \alert{\texttt{ToolCallback}} \textit{under-the-hood} anche con approccio dichiarativo
         \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{MAT}
+\framesubtitle{Spring AI - Approccio programmatico}
+{\footnotesize
+    \vspace*{-.7cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio statico}
+		    {\tiny\inputminted{java}{code/ToolConfig-2.java}}
+        \end{block}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio dinamico}
+		    {\tiny\inputminted{java}{code/TimeToolsServiceImpl-2.java}}
+        \end{block}
     \end{minipage}
 }
 \end{frame}
@@ -209,7 +241,7 @@
                 \onslide<5->\item[\alert{\faArrowCircleRight}] \textbf{Tipi reattivi} - \texttt{Flow}, \texttt{Mono}, \texttt{Flux}
                 \onslide<6->\item[\alert{\faArrowCircleRight}] \textbf{Tipi funzionali} - \texttt{Function}, \texttt{Supplier}, \texttt{Consumer}
             \end{itemize}
-            \onslide<7->\item[\alert{\faExclamationTriangle}] I tipi funzionali sono supportati attraverso l'approccio \alert{function-based} dedicato (\texttt{@Bean})
+            \onslide<7->\item[\alert{\faExclamationTriangle}] I tipi funzionali sono supportati attraverso l'approccio \alert{function-based} dedicato
         \end{itemize}
     \end{minipage}
 }
@@ -218,59 +250,92 @@
 \section{Tool Calling\\\small{Function as tool}} % (fold)
 \label{sec:tool_calling_fat}
 %
-\begin{frame}[fragile,t] \frametitle{Tool calling}
-\framesubtitle{Function as tool}
+\begin{frame}[fragile,t] \frametitle{FAT}
+\framesubtitle{Spring AI - Approccio dichiarativo}
 {\scriptsize
     \vspace*{-.7cm}
     \begin{minipage}[t]{\textwidth}
-        \begin{block}{Definizione di \textit{tool} come \texttt{@Bean}}
+        \begin{block}{Classe di definizione dei \textit{tool}}
 		    {\tiny\inputminted{java}{code/WeatherTools.java}}
         \end{block}
         \vspace*{.3cm}
-        \only<1-5|handout:1>{
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<1->\item[\alert{\faArrowCircleRight}] Alternative all'approccio con annotazioni di metodo (\texttt{@Tool})
-            \onslide<2->\item[\alert{\faArrowCircleRight}] Il nome del \texttt{@Bean} diventa l'identificativo del \textit{tool}
-            \onslide<3->\item[\alert{\faArrowCircleRight}] \alert{\texttt{@Description}} fornisce la descrizione del \textit{tool}
-            \onslide<4->\begin{itemize}[leftmargin=10pt,align=right]
-                \item[\alert{\faExclamationCircle}] Aiutare il modello a comprendere lo scopo del \textit{tool}
-            \end{itemize}
-            \onslide<5->\item[\alert{\faArrowCircleRight}] \textbf{Tipi funzionali supportati:} \texttt{Function<I,O>}, \texttt{Supplier<O>}, \texttt{Consumer<I>}, \texttt{BiFunction<I1,I2,O>}
-        \end{itemize}
-        }
-        \only<6|handout:2>{
-        \begin{itemize}[leftmargin=10pt,align=right]
-            \item[\alert{\faExclamationTriangle}] \textbf{Limitazioni} (vincoli di risoluzione dei tipi a runtime):
+            \onslide<1->\item[\alert{\faExclamationTriangle}] \textbf{Tipi funzionali supportati:} \texttt{Function<I,O>}, \texttt{Supplier<O>}, \texttt{Consumer<I>}, \texttt{BiFunction<I1,I2,O>}
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Ciascun funzionale disponibile come \textit{tool} attraverso definizione \alert{\texttt{@Bean}}
             \begin{itemize}[leftmargin=10pt,align=right]
-                \item[\alert{\faTimes}] Tipi primitivi
-                \item[\alert{\faTimes}] \texttt{Optional}
-                \item[\alert{\faTimes}] Collezioni (\texttt{List}, \texttt{Map}, \texttt{Array}, \texttt{Set})
-                \item[\alert{\faTimes}] Tipi asincroni e reattivi
+                \item[\alert{\faExclamationTriangle}] Definire nome come \alert{costante esportabile} per mancanza di garanzia \textit{type safety}
             \end{itemize}
+            \onslide<3->\item[\alert{\faArrowCircleRight}] \alert{\texttt{@Description}} come \texttt{description} di MAT
+            \onslide<4->\item[\alert{\faArrowCircleRight}] \alert{\texttt{@ToolParam}} con medesima logica di MAT
         \end{itemize}
-        }
     \end{minipage}
 }
 \end{frame}
 %
-\begin{frame}[fragile,t] \frametitle{Tool calling}
-\framesubtitle{Utilizzo di \textit{tool} definiti come \texttt{@Bean}}
-{\scriptsize
+\begin{frame}[fragile,t] \frametitle{FAT}
+\framesubtitle{Spring AI - Approccio dichiarativo}
+{\footnotesize
     \vspace*{-.7cm}
     \begin{minipage}[t]{\textwidth}
-        \begin{block}{Aggiunta di \textit{tool} al \texttt{ChatClient}}
-		    {\tiny\inputminted{java}{code/ChatClientWithBeanTools.java}}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio statico}
+		    {\tiny\inputminted{java}{code/WeatherToolsConfig.java}}
+        \end{block}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio dinamico}
+		    {\tiny\inputminted{java}{code/WeatherToolsServiceImpl.java}}
+        \end{block}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{FAT}
+\framesubtitle{Spring AI - Approccio programmatico}
+{\scriptsize
+    \vspace*{-.8cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{Classe di definizione dei funzionali}
+		    {\tiny\inputminted{java}{code/TemperatureService.java}}
         \end{block}
         \vspace*{.3cm}
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<1->\item[\alert{\faArrowCircleRight}] Riferimento al \textit{tool} tramite \alert{nome del bean} con \texttt{toolNames()}
-            \onslide<2->\item[\alert{\faArrowCircleRight}] Possibilità di definire \alert{\textit{tool} di default} condivisi tra più richieste con \texttt{defaultToolNames()}
-            \onslide<3->\begin{itemize}[leftmargin=10pt,align=right]
-                \item[\alert{\faExclamationTriangle}] Attenzione alle \alert{implicazioni di sicurezza} con \textit{tool} di default
-            \end{itemize}
-            \onslide<4->\item[\alert{\faArrowCircleRight}] \textbf{Generazione automatica dello schema} degli input
-            \onslide<5->\item[\alert{\faArrowCircleRight}] \texttt{@ToolParam} permette personalizzazione per descrizioni e stato \textit{required} anche per tipi nested
+            \item[\alert{\faArrowCircleRight}] Richiesta sola la logica pertinente al funzionale scelto (es. \texttt{apply} per \texttt{Function})
         \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{FAT}
+\framesubtitle{Spring AI - Approccio programmatico}
+{\scriptsize
+    \vspace*{-.8cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{Utilizzo approccio \textit{function-tool callback}}
+		    {\tiny\inputminted{java}{code/FunctionToolCallback.java}}
+        \end{block}        
+        \vspace*{.1cm}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alert{\faArrowCircleRight}] \texttt{FunctionToolCallback.Builder} linka un identificativo testuale ad una istanza di una nuova \textit{function tool}
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Costruito un \alert{\texttt{ToolCallback}} che definisce la logica di utilizzo del \textit{tool}
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{ToolDefinitions.Builder}} permette di definire nome, descrizione e schema del \textit{tool}
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{ToolMetadata.Builder}} responsabile della definizione strategia \textit{default vs direct}
+            \end{itemize}  
+            \onslide<4->\item[\alert{\faExclamationTriangle}] Definizione \alert{\texttt{ToolCallback}} \textit{under-the-hood} anche con approccio dichiarativo
+        \end{itemize}
+    \end{minipage}
+}
+\end{frame}
+%
+\begin{frame}[fragile,t] \frametitle{FAT}
+\framesubtitle{Spring AI - Approccio programmatico}
+{\footnotesize
+    \vspace*{-.7cm}
+    \begin{minipage}[t]{\textwidth}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio statico}
+		    {\tiny\inputminted{java}{code/WeatherToolsConfig-2.java}}
+        \end{block}
+        \begin{block}{\textit{Tool-aware} \texttt{ChatClient} - approccio dinamico}
+		    {\tiny\inputminted{java}{code/WeatherToolsServiceImpl-2.java}}
+        \end{block}
     \end{minipage}
 }
 \end{frame}
