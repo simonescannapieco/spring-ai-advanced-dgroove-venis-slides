@@ -3,7 +3,7 @@ public Answer getOllamaTimeToolsLocalTimeAnswer(QuestionRequest request) {
 
     return new Answer(this.ollamaTimeToolsChatClient
         .prompt()
-        .tools(timeTools)
+        .toolCallbacks(toolCallback)
         ...
         .call()
         .content());

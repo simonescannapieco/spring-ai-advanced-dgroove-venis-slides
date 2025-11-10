@@ -1,15 +1,19 @@
 @Configuration(proxyBeanMethods = false)
 class WeatherTools {
 
-    @Bean
-    @Description("Get the weather in location")
-    Function<WeatherRequest, WeatherResponse> currentWeather() {
-        return weatherService;
-    }
+    public static final String GET_TEMP_IN_LOCATION_FUNCTION_NAME = "getTemperatureInLocation";
 
-    @Bean
-    @Description("Get the current temperature in a specific city")
-    Function<TemperatureRequest, TemperatureResponse> cityTemperature() {
-        return temperatureService;
-    }
+	@Bean(GET_TEMP_IN_LOCATION_FUNCTION_NAME)
+	@Description("Ottieni la temperatura corrente nella località specificata.")
+	Function<WeatherRequest, TemperatureResponse> currentTemperature() {
+		return new TemperatureService();
+	}
+
 }
+
+public enum Unit { C, F }
+
+public record WeatherRequest(
+    @ToolParam(description = "Il nome di una città o di una nazione.") String location, Unit unit) {}
+
+public record TemperatureResponse(double temp, Unit unit) {}

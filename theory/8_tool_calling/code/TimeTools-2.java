@@ -4,4 +4,9 @@ public class TimeTools {
         ...
     }
 
+    public String getCurrentTime(
+        @ToolParam(description = "Valore che rappresenta il fuso orario.") String timeZone) {   
+        ...
+    }
+
 }
