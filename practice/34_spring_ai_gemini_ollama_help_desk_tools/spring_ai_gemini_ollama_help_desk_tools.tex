@@ -1,0 +1,122 @@
+\section{\faWrench\ Tool calling\\\small{Method as Tool - Interazione con DB}} % (fold)
+\label{sec:spring-tool-calling-mat-db}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio MAT programmatico per gestione \textit{ticketing help desk} (H2 DB)
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Modifica dipendenze di progetto
+            \onslide<3->\item[\alertedcircled{2}] Modifica configurazione applicativo
+            \onslide<4->\item[\alertedcircled{3}] Creazione \textit{string template} di sistema per \texttt{ChatClient} con capacità \textit{help desk}
+            \onslide<5->\item[\alertedcircled{4}] Creazione \textit{entity} per tabella DB
+            \onslide<6->\item[\alertedcircled{5}] Creazione modello per CRUD a DB per \textit{ticket}
+            \onslide<7->\item[\alertedcircled{6}] Creazione interfaccia JPA \textit{repository}
+            \onslide<8->\item[\alertedcircled{7}] Implementazione servizio di CRUD a DB
+            \onslide<9->\item[\alertedcircled{8}] Configurazione \texttt{ChatClient} per \textit{help desk tools}
+            \onslide<10->\item[\alertedcircled{9}] Modifica controllore MVC
+            \onslide<11->\item[\alertedcircled{10}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Dipendenze di progetto}
+			{\tiny\inputminted{xml}{code/pom.xml}}
+    	\end{block}
+        \begin{block}{Configurazione applicativo}
+			{\tiny\inputminted{yaml}{code/application.yml}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{\textit{File} \texttt {templates/get-help-desk-system-prompt.st}}
+			{\tiny\inputminted{text}{code/get-help-desk-system-prompt.st}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \vspace*{-.7cm}
+        \begin{block}{\textit{Entity} tabella in DB}
+			{\tiny\inputminted{java}{code/HelpDeskTicket.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Modello CRUD \textit{ticket} a DB}
+			{\tiny\inputminted{java}{code/TicketRequest.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{JPA \textit{repository}}
+			{\tiny\inputminted{java}{code/HelpDeskTicketRepository.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \vspace*{-.7cm}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Servizio CRUD DB}
+			{\tiny\inputminted{java}{code/HelpDeskTicketService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \vspace*{-.7cm}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{\textit{Help desk tools} - I}
+			{\tiny\inputminted{java}{code/HelpDeskTools.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{\textit{Help desk tools} - II}
+			{\tiny\inputminted{java}{code/HelpDeskTools-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Configurazione \texttt{ChatClient} - I}
+			{\tiny\inputminted{java}{code/HelpDeskChatClientConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Configurazione \texttt{ChatClient} - II}
+			{\tiny\inputminted{java}{code/HelpDeskChatClientConfig-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \vspace*{-.7cm}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Controllore MVC - I}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling DB}
+        \begin{block}{Controllore MVC - II}
+			{\tiny\inputminted{java}{code/QuestionController-2.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{14-spring-ai-gemini-ollama-help-desk-tools}}
+	\end{center}
+\end{frame}
