@@ -1,0 +1,56 @@
+\section{\faWrench\ Tool calling\\\small{Gestione eccezioni}} % (fold)
+\label{sec:spring-tool-calling-exception-handling}
+%
+\begin{frame}[t,fragile] \frametitle{Tool calling}
+    \framesubtitle{Gestione eccezioni}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Se un \textit{tool} genera una eccezione, Spring AI lancia una \alert{\texttt{ToolExecutionException}}
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Meccanismo di gestione eccezioni a livello di \textit{tool} tramite \alert{\texttt{ToolExecutionExceptionProcessor}}
+        \begin{block}{Auto-configurazione gestore eccezioni}
+			{\tiny\inputminted{java}{code/ToolExecutionExceptionProcessor.java}}
+    	\end{block}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] Di \textit{default} il messaggio ritornato al LLM (\textit{flag} \texttt{alwaysThrow} a \texttt{false})
+            \onslide<4->\item[\alert{\faArrowCircleRight}] Con \textit{flag} \texttt{alwaysThrow} a \texttt{true}, eccezione ritornata lato \textit{client}
+            \onslide<5->\item[\alert{\faArrowCircleRight}] Utile in fase di \textit{development}/\textit{fast prototyping} 
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio MAT programmatico per gestione \textit{ticketing help desk} - Gestione eccezioni
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Definizione \texttt{@Bean} gestore eccezioni
+            \onslide<3->\item[\alertedcircled{2}] \textit{Mock} lancio eccezione lato \textit{tool}
+            \onslide<4->\item[\alertedcircled{3}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Gestione eccezioni}
+        \begin{block}{Configurazione \texttt{ChatClient}}
+			{\tiny\inputminted{java}{code/HelpDeskChatClientConfig.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Gestione eccezioni}
+        \begin{block}{\textit{Help desk tools}}
+			{\tiny\inputminted{java}{code/HelpDeskTools.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{15-spring-ai-gemini-ollama-help-desk-exception-handling}}
+	\end{center}
+\end{frame}
