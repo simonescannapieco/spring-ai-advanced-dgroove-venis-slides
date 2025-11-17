@@ -4,10 +4,8 @@ public class AudioController {
 
     private final OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel;
 
-    AudioController(OpenAiAudioTranscriptionModel transcriptionModel,
-            SpeechModel speechModel) {
+    AudioController(OpenAiAudioTranscriptionModel transcriptionModel) {
         this.openAiAudioTranscriptionModel = transcriptionModel;
-        this.speechModel = speechModel;
     }
 
     @GetMapping("/transcribe")

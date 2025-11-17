@@ -1,10 +1,10 @@
     ...
     
-    private String getContentType(Resource audioFile) {
-        String contentType = URLConnection.guessContentTypeFromName(audioFile.getFilename());
-        
+    private String getContentType(Resource multimediaFile) {
+        String contentType = URLConnection.guessContentTypeFromName(multimediaFile.getFilename());
+
         if (contentType == null || contentType.equals("application/octet-stream")) {
-            String fileName = audioFile.getFilename();
+            String fileName = multimediaFile.getFilename();
             if (fileName != null) {
                 String extension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
                 contentType = switch (extension) {
@@ -13,13 +13,13 @@
                     case "m4a" -> "audio/mp4";
                     case "ogg" -> "audio/ogg";
                     case "flac" -> "audio/flac";
-                    default -> "audio/mpeg";
+                    default -> "media/unknown";
                 };
             } else {
-                contentType = "audio/mpeg";
+                contentType = "media/unknown";
             }
         }
-        
+
         return contentType;
     }
     

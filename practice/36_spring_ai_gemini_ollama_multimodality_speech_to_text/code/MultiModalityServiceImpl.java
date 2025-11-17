@@ -15,19 +15,17 @@ public class MultiModalityServiceImpl implements MultiModalityService {
 
     @Override
     public Answer getTranscriptionFromAudioFile(Resource audioFile) {
-        
+
         String contentType = getContentType(audioFile);
 
         Media audioMedia = new Media(
-            MimeTypeUtils.parseMimeType(contentType), audioFile
-        );
+                MimeTypeUtils.parseMimeType(contentType), audioFile);
 
         return new Answer(this.geminiChatClient.prompt()
-        .user(u -> u.text("Trascrivi il seguente file audio: ").media(audioMedia))
-        .call()
-        .content()
-        );
-        
+                .user(u -> u.text("Trascrivi il seguente file audio: ").media(audioMedia))
+                .call()
+                .content());
+
     }
 
     ...
