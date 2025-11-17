@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: demo
+    ...
+    ai:
+        ...
+        openai:
+            ...
+            audio:
+                transcription:
+                    options:
+                        model: gemini-2.5-flash

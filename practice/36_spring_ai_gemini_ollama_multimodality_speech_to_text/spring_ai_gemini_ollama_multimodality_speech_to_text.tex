@@ -1,0 +1,100 @@
+\section{\faWrench\ Multimodalità\\\small{Speech-to-text}} % (fold)
+\label{sec:spring-tool-calling-exception-handling}
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Processo di produzione testuale da audio del parlato
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Compatibilità Spring AI (al 11/2025)
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] OpenAI API
+            \item[\alert{\faArrowCircleRight}] Azure OpenAI
+            \item[\alert{\faArrowCircleRight}] OpenAI-\textit{compatible} API (limitata)
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: caso OpenAI}
+    {\footnotesize
+        \begin{block}{Dipendenze applicativo}
+			{\tiny\inputminted{xml}{code/pom.xml}}
+    	\end{block}
+        \begin{block}{Configurazione applicativo}
+			{\tiny\inputminted{yaml}{code/application.yml}}
+    	\end{block}       
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: caso OpenAI}
+    {\footnotesize
+        \begin{block}{\textit{Controller} di trascrizione}
+			{\tiny\inputminted{java}{code/AudioController.java}}
+    	\end{block}
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio \textit{speech-to-text} Gemini (>= 2.5-flash)
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Modifica configurazione di sistema
+            \onslide<3->\item[\alertedcircled{2}] Creazione interfaccia ed implementazione del servizio
+            \onslide<4->\item[\alertedcircled{3}] Modifica controllore MVC
+            \onslide<5->\item[\alertedcircled{4}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+    {\footnotesize
+        \begin{block}{Configurazione applicativo}
+			{\tiny\inputminted{yaml}{code/application-2.yml}}
+    	\end{block}       
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/MultimodalityService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+    \vspace*{-.7cm}
+    \begin{block}{Implementazione servizio - I}
+		{\tiny\inputminted{java}{code/MultimodalityServiceImpl.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+    \begin{block}{Implementazione servizio - II}
+		{\tiny\inputminted{java}{code/MultimodalityServiceImpl-2.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/QuestionController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{16-spring-ai-gemini-ollama-multimodality-audio-transcription}}
+	\end{center}
+\end{frame}
