@@ -29,11 +29,94 @@
 \end{frame}    
 %
 \begin{frame}[t,fragile] \frametitle{Multimodalità}
-    \framesubtitle{Speech-to-text: caso OpenAI}
+    \framesubtitle{Speech-to-text: OpenAI con impostazioni di \textit{default}}
+    \vspace*{-.7cm}
     {\footnotesize
         \begin{block}{\textit{Controller} di trascrizione}
 			{\tiny\inputminted{java}{code/AudioController.java}}
     	\end{block}
+        \vspace*{.1cm}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] \alert{\texttt{OpenAiAudioTranscriptionModel}} implementazione di \alert{\texttt{AudioTranscriptionModel}}
+            \onslide<2->\item[\alert{\faArrowCircleRight}] Impostazioni di \textit{default}
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<3->\item[\alert{\faArrowCircleRight}] Modello Whisper 1
+                \item[\alert{\faArrowCircleRight}] \textit{Response format} in JSON
+                \item[\alert{\faArrowCircleRight}] Temperatura 0.7
+            \end{itemize}
+            \onslide<4->\item[\alert{\faArrowCircleRight}] Formati supportati: \texttt{mp3}, \texttt{mp4}, \texttt{mpeg}, \texttt{mpga}, \texttt{m4a}, \texttt{wav}, \texttt{webm} (documentazione classe \alert{\texttt{AudioTranscriptionPrompt}})
+            \onslide<5->\item[\alert{\faExclamationTriangle}] Metodo \alert{\texttt{call}} per allinearsi all'astrazione LLM in Spring AI       \end{itemize}       
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: OpenAI con impostazioni \textit{custom} dinamiche}
+    \vspace*{-.7cm}   
+    {\footnotesize
+        \begin{block}{\textit{Controller} di trascrizione}
+			{\tiny\inputminted{java}{code/AudioControllerCustom.java}}
+    	\end{block}
+        \vspace*{.1cm}
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] \alert{\texttt{AudioTrascriptionPrompt}} incapsula la risorsa audio e le opzioni di trascrizione (\alert{\texttt{OpenAiAudioTranscriptionOptions}})
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<2->\item[\alert{\faArrowCircleRight}] \alert{\texttt{.prompt}} fornisce al LLM contesto riguardo gli argomenti trattati nel \textit{file} audio
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{.language}} evita al LLM l'attività di \textit{language guessing}
+                \item[\alert{\faArrowCircleRight}] \alert{\texttt{.responseFormat}} per calibrare il formato di \textit{output} al contesto applicativo di utilizzo
+            \end{itemize}
+            \onslide<3->\item[\alert{\faExclamationTriangle}] con \texttt{call(audioFile)}, Spring AI si occupa di creare un \textit{bean} \texttt{OpenAiAudioTranscriptionOptions} con i valori di \textit{default}
+        \end{itemize}      
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: OpenAI con impostazioni \textit{custom} statiche} 
+    {\footnotesize
+        \begin{block}{Configurazione applicativo}
+			{\tiny\inputminted{yaml}{code/application-stt.yml}}
+    	\end{block}    
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: OpenAI \textit{compatible} API}
+    {\footnotesize
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faExclamationTriangle}] Ollama non supportato
+            \onslide<2->\item[\alert{\faExclamationTriangle}] Gemini API supportato \alert{con restrizioni}
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<3->\item[\alert{\faArrowCircleRight}] Non possibile utilizzare le astrazioni \alert{\texttt{OpenAiAudioTranscriptionModel}} e \alert{\texttt{AudioTranscriptionPrompt}}
+                \onslide<4->\item[\alert{\faArrowCircleRight}] Configurazione statica non ha effetto
+                \onslide<5->\item[\alert{\faArrowCircleRight}] Sfruttare modelli con \alert{caratteristiche intrinseche STT}\ldots
+                \onslide<6->\item[\alert{\faArrowCircleRight}] \ldots come Gemini 2.5!
+            \end{itemize}
+        \end{itemize}      
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: OpenAI \textit{compatible} API}
+    \vspace*{-.7cm}
+    {\footnotesize
+        \begin{block}{\textit{Upload file} audio su \textit{cloud} temporaneo Google}
+			{\tiny\inputminted{bash}{code/gemini-stt.sh}}
+    	\end{block}    
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Speech-to-text: OpenAI \textit{compatible} API}
+    {\footnotesize
+        \begin{block}{Chiamata Gemini API \textit{generateContent}}
+			{\tiny\inputminted{bash}{code/gemini-stt-2.sh}}
+    	\end{block}    
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<1->\item[\alert{\faArrowCircleRight}] Due strade percorribili
+            \begin{itemize}[leftmargin=10pt,align=right]
+                \onslide<2->\item[\alertedcircled{1}] Utilizzo Spring Web puro (\texttt{RestTemplate}, \texttt{ResponseEntity}, \texttt{HttpEntity}, \ldots)
+                \onslide<3->\item[\alertedcircled{2}] Utilizzo Spring AI (STT attraverso \texttt{ChatClient})
+            \end{itemize}
+        \end{itemize}         
     }
 \end{frame}    
 %
@@ -85,6 +168,6 @@
     \framesubtitle{Branch di riferimento}
 	\begin{center}
 		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
-		\textit{Branch:} \alert{\texttt{16-spring-ai-gemini-ollama-multimodality-audio-transcription}}
+		\textit{Branch:} \alert{\texttt{16-spring-ai-gemini-ollama-multimodality-stt}}
 	\end{center}
 \end{frame}

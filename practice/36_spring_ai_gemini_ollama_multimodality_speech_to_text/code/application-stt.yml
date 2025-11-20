@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: demo
+    ai:
+        openai:
+            api-key: ${OPENAI_API_KEY}
+            audio:
+                transcription:
+                    model: whisper-1      # whisper-1, gpt-4o-transcribe, gpt-4o-mini-transcribe
+                    response-format: json # json, text, srt, verbose_json, vtt
+                    prompt: Topics        # Should match the audio language
+                    language: it          # ISO-639-1 format to improve accuracy and latency
+                    temperature: 0        # [0, 1]. 0 means automatically adjusting temperature
+                    ...
