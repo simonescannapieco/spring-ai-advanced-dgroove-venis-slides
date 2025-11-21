@@ -1,0 +1,93 @@
+\section{\faWrench\ Multimodalità\\\small{Image-to-text}} % (fold)
+\label{sec:spring-itt}
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Image-to-text}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Processo di descrizione di una immagine
+        \onslide<2->\item[\alert{\faArrowCircleRight}] Compatibilità Spring AI (al 11/2025)
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<3->\item[\alert{\faArrowCircleRight}] OpenAI API
+            \item[\alert{\faArrowCircleRight}] Azure OpenAI
+            \item[\alert{\faArrowCircleRight}] Stability
+            \item[\alert{\faArrowCircleRight}] ZhiPuAI
+            \item[\alert{\faArrowCircleRight}] QianFan (Spring AI Community)
+            \item[\alert{\faArrowCircleRight}] OpenAI \textit{compatible} API (limitata)
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame} 
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
+\framesubtitle{Image-to-text: OpenAI \textit{compatible} API}
+    {\footnotesize
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Meccanismo similare a STT attraverso ChatClient anche per strategie OpenAI \textit{compatible} API
+        \onslide<2->\item[\alert{\faExclamationTriangle}] Possibile grazie ad \textit{early support} Spring AI con multimodalità GPT 
+    \end{itemize}
+    \begin{block}{Utilizzo GPT-4.0 per visione computazionale}
+		{\tiny\inputminted{java}{code/GPTMultimodalityVision.java}}
+    \end{block}
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<3->\item[\alert{\faArrowCircleRight}] Modo alternativo per implementare ITT attraverso GPT\ldots
+        \onslide<4->\item[\alert{\faArrowCircleRight}] \ldots adattabile anche per STT
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<5->\item[\alert{\faArrowCircleRight}] \alert{\texttt{Media}} astrae dalla tipologia di entità multimediale
+            \onslide<6->\item[\alert{\faExclamationTriangle}] Sviluppatore responsabile della scelta di un modello multimodale compatibile con la \textit{task}
+        \end{itemize}
+    \end{itemize}  
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Applicazione e passaggi}
+    {\small
+    \begin{itemize}[leftmargin=10pt,align=right]
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Servizio \textit{image-to-text} Gemini
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \onslide<2->\item[\alertedcircled{1}] Creazione interfaccia ed implementazione del servizio
+            \onslide<3->\item[\alertedcircled{2}] Modifica controllore MVC
+            \onslide<4->\item[\alertedcircled{3}] \textit{Test} delle funzionalità con Postman/Insomnia
+        \end{itemize}
+    \end{itemize}
+    }
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+        \begin{block}{Interfaccia servizio}
+			{\tiny\inputminted{java}{code/MultimodalityService.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+    \vspace*{-.7cm}
+    \begin{block}{Implementazione servizio - I}
+		{\tiny\inputminted{java}{code/MultimodalityServiceImpl.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Speech-to-text: Gemini}
+    \begin{block}{Implementazione servizio - II}
+		{\tiny\inputminted{java}{code/MultimodalityServiceImpl-2.java}}
+    \end{block}
+\end{frame}
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Tool calling}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/GeminiMultimodalityController.java}}
+    	\end{block}
+\end{frame}
+%
+\begin{frame}[fragile] \frametitle{Codice}
+    \framesubtitle{Branch di riferimento}
+	\begin{center}
+		{\scriptsize \href{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}{\texttt{https://github.com/simonescannapieco/spring-ai-advanced-dgroove-venis-code.git}}}\\
+		\textit{Branch:} \alert{\texttt{16-spring-ai-gemini-ollama-multimodality-itt}}
+	\end{center}
+\end{frame}
