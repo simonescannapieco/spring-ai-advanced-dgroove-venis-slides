@@ -1,9 +1,5 @@
-/**
- * Interface for the text to speech model.
- *
- * @author Alexandros Pappas
- */
-public interface TextToSpeechModel extends Model<TextToSpeechPrompt, TextToSpeechResponse>, StreamingTextToSpeechModel {
+public interface TextToSpeechModel extends Model<TextToSpeechPrompt, TextToSpeechResponse>, 
+                                           StreamingTextToSpeechModel {
 
 	default byte[] call(String text) {
 		TextToSpeechPrompt prompt = new TextToSpeechPrompt(text);
