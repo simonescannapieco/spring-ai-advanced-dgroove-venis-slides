@@ -67,6 +67,15 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Multimodalità}
+    \framesubtitle{Text-to-speech: OpenAI con impostazioni \textit{custom} statiche} 
+    {\footnotesize
+        \begin{block}{Configurazione applicativo}
+			{\tiny\inputminted{yaml}{code/application-tts.yml}}
+    	\end{block}    
+    }
+\end{frame}    
+%
+\begin{frame}[t,fragile] \frametitle{Multimodalità}
 \framesubtitle{Text-to-speech: OpenAI \textit{compatible} API}
     {\footnotesize
     \begin{itemize}[leftmargin=10pt,align=right]
@@ -100,7 +109,8 @@
             \onslide<4->\item[\alertedcircled{3}] Creazione modello per informazioni voci disponibili
             \onslide<5->\item[\alertedcircled{4}] Creazione convertitore \textit{output} audio Gemini a formato riproducibile nel \textit{web}
             \onslide<6->\item[\alertedcircled{5}] Modifica controllore MVC
-            \onslide<7->\item[\alertedcircled{6}] \textit{Test} delle funzionalità con Postman/Insomnia
+            \onslide<7->\item[\alertedcircled{6}] Creazione pagina di presentazione
+            \onslide<8->\item[\alertedcircled{7}] \textit{Test} delle funzionalità su pagina di presentazione
         \end{itemize}
     \end{itemize}
     }
@@ -131,16 +141,16 @@
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Text-to-speech: Gemini}
-    	\vspace*{-.7cm}
-        \begin{block}{Utilità convertitore PCM -> WAV}
-			{\tiny\inputminted{java}{code/PcmToWavConverter.java}}
+        \begin{block}{Modello informazioni voci disponibili}
+			{\tiny\inputminted{java}{code/VoiceInfo.java}}
     	\end{block}
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
     \framesubtitle{Text-to-speech: Gemini}
-        \begin{block}{Modello informazioni voci disponibili}
-			{\tiny\inputminted{java}{code/VoiceInfo.java}}
+    	\vspace*{-.7cm}
+        \begin{block}{Utilità convertitore PCM -> WAV}
+			{\tiny\inputminted{java}{code/PcmToWavConverter.java}}
     	\end{block}
 \end{frame}
 %

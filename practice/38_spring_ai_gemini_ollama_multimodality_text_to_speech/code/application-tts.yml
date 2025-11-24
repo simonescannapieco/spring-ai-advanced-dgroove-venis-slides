@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: demo
+    ai:
+        openai:
+            api-key: ${OPENAI_API_KEY}
+            audio:
+                speech:
+                    model: gpt-4o-mini-tts # gpt-4o-mini-tts (opt. speed and costs)
+                                           # gpt-4o-tts (higher quality)
+                                           # tts-1 (opt. speed)
+                                           # tts-1-hd (opt. quality)
+                    voice: alloy           # alloy, echo, fable, onyx, nova, shimmer
+                    response-format: mp3   # mp3, opus, aac, flac, wav, pcm
+                    speed: 1.0             # [0.25, 4.0]
+                    ...
