@@ -5,22 +5,34 @@
     \framesubtitle{Text-to-speech}
     {\footnotesize
     \begin{itemize}[leftmargin=10pt,align=right]
-        \onslide<1->\item[\alert{\faArrowCircleRight}] Processo di descrizione di una immagine
-        \onslide<2->\item[\alert{\faArrowCircleRight}] Compatibilità Spring AI (al 11/2025)
+        \onslide<1->\item[\alert{\faArrowCircleRight}] Sintetizzazione sonora a partire da testo (opposto della trascrizione)
+        \onslide<2->\item[\alert{\faExclamationTriangle}] Non possibile utilizzare le capacità multimodali dei LLM generalisti
+        \onslide<3->\item[\alert{\faArrowCircleRight}] Compatibilità Spring AI (al 11/2025)
         \begin{itemize}[leftmargin=10pt,align=right]
-            \onslide<3->\item[\alert{\faArrowCircleRight}] OpenAI API
-            \item[\alert{\faArrowCircleRight}] Azure OpenAI
-            \item[\alert{\faArrowCircleRight}] Stability
-            \item[\alert{\faArrowCircleRight}] ZhiPuAI
-            \item[\alert{\faArrowCircleRight}] QianFan (Spring AI Community)
-            \item[\alert{\faArrowCircleRight}] OpenAI \textit{compatible} API (limitata)
+            \item[\alert{\faArrowCircleRight}] OpenAI API
+            \item[\alert{\faArrowCircleRight}] ElevenLabs
         \end{itemize}
+        \onslide<4->\item[\alert{\faArrowCircleRight}] Possibilità di scelta fra tono, voci, velocità, \ldots
+        \onslide<5->\item[\alert{\faArrowCircleRight}] Ambiti applicativi
+        \begin{itemize}[leftmargin=10pt,align=right]
+            \item[\alert{\faArrowCircleRight}] IVR (Interactive Voice Response) - Sistema telefonico automatizzato di seconda generazione
+            \item[\alert{\faArrowCircleRight}] Tecnologie assistive decicate alle diverse abilità
+            \item[\alert{\faArrowCircleRight}] \ldots
+        \end{itemize}        
     \end{itemize}
     }
-\end{frame} 
+\end{frame}   
+%
+\begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
+    \framesubtitle{Text-to-speech}
+    	\vspace*{-.7cm}
+        \begin{block}{Implementazione controllore REST}
+			{\tiny\inputminted{java}{code/GeminiMultimodalityController.java}}
+    	\end{block}
+\end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Multimodalità}
-\framesubtitle{Image-to-text: OpenAI \textit{compatible} API}
+\framesubtitle{Text-to-speech: OpenAI \textit{compatible} API}
     {\footnotesize
     \begin{itemize}[leftmargin=10pt,align=right]
         \onslide<1->\item[\alert{\faArrowCircleRight}] Meccanismo similare a STT attraverso ChatClient anche per strategie OpenAI \textit{compatible} API
@@ -55,7 +67,7 @@
 \end{frame}
 %
 \begin{frame}[t,fragile] \frametitle{Progetto Spring AI}
-    \framesubtitle{Tool calling}
+    \framesubtitle{Text-to-speech: Gemini}
     	\vspace*{-.7cm}
         \begin{block}{Implementazione controllore REST}
 			{\tiny\inputminted{java}{code/GeminiMultimodalityController.java}}
